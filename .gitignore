@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/java/io/anggi/personalwebsite/controller/HelloController.java
+src/main/resources/application.properties
