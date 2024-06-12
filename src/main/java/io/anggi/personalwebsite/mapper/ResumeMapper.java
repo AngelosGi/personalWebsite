@@ -23,6 +23,23 @@ public class ResumeMapper {
         return dto;
     }
 
+    public static Resume toResumeEntity(ResumeDTO dto) {
+        Resume resume = new Resume();
+        resume.setId(dto.getId());
+        resume.setName(dto.getName());
+        resume.setJobTitle(dto.getJobTitle());
+        resume.setLocation(dto.getLocation());
+        resume.setPortfolioUrl(dto.getPortfolioUrl());
+        resume.setGithubUrl(dto.getGithubUrl());
+        resume.setEmail(dto.getEmail());
+        resume.setPhone(dto.getPhone());
+        resume.setSummary(dto.getSummary());
+        resume.setEducationList(dto.getEducations().stream().map(ResumeMapper::toEducationEntity).collect(Collectors.toList()));
+        resume.setExperienceList(dto.getExperiences().stream().map(ResumeMapper::toExperienceEntity).collect(Collectors.toList()));
+        return resume;
+    }
+
+
     public static EducationDTO toEducationDTO(Education education) {
         EducationDTO dto = new EducationDTO();
         dto.setId(education.getId());
