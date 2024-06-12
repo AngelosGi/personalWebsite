@@ -17,4 +17,16 @@ public class EducationService {
         return educationRepository.findAll();
     }
 
+
+    public Education getEducationById(Long id) {
+        return educationRepository.findById(id).orElse(null);
+    }
+
+    public Education saveEducation(Education education) {
+        return educationRepository.save(education);
+    }
+
+    public void deleteEducation(Long id) {
+        educationRepository.deleteById(id);
+    }
 }
