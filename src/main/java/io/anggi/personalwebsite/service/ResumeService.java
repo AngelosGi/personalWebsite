@@ -21,4 +21,12 @@ public class ResumeService {
         return resumeRepository.findById(id).orElse(null);
     }
 
+    public Resume saveResume(Resume resume) {
+        return resumeRepository.save(resume);
+    }
+
+    public void deleteResume(Long id) {
+        resumeRepository.deleteById(id);
+    }
+
 }
