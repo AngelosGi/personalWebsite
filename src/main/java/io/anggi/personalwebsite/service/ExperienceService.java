@@ -17,4 +17,17 @@ public class ExperienceService {
         return experienceRepository.findAll();
     }
 
+    public Experience getExperienceById(Long id) {
+        return experienceRepository.findById(id).orElse(null);
+    }
+
+    public Experience saveExperience(Experience experience) {
+        return experienceRepository.save(experience);
+    }
+
+    public void deleteExperience(Long id) {
+        experienceRepository.deleteById(id);
+    }
+
+
 }
