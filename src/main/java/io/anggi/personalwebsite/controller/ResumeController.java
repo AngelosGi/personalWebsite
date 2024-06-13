@@ -6,9 +6,12 @@ import io.anggi.personalwebsite.model.Resume;
 import io.anggi.personalwebsite.service.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/resume")
@@ -24,9 +27,7 @@ public class ResumeController {
 
     @GetMapping
     public List<ResumeDTO> getAllResumes() {
-        return resumeService.getAllResumes().stream()
-                .map(ResumeMapper::toResumeDTO)
-                .collect(Collectors.toList());
+        return resumeService.getAllResumes().stream().map(ResumeMapper::toResumeDTO).collect(Collectors.toList());
     }
 
     @PostMapping
@@ -48,4 +49,5 @@ public class ResumeController {
     public void deleteResume(@PathVariable Long id) {
         resumeService.deleteResume(id);
     }
+
 }
