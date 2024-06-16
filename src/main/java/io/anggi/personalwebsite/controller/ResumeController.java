@@ -12,32 +12,43 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@RestController
-@RequestMapping("/api/resume")
+@Controller
+@RequestMapping("/resume")
 public class ResumeController {
 
     @Autowired
     private ResumeService resumeService;
 
-    @GetMapping("/{id}")
+    // Thymeleaf endpoint
+    @GetMapping
+    public String getResume(Model model) {
+        Resume resume = resumeService.getResume();
+        model.addAttribute("resume", resume);
+        return "resume";
+    }
+
+    @GetMapping("/api/{id}")
+    @ResponseBody
     public ResumeDTO getResumeById(@PathVariable Long id) {
         return ResumeMapper.toResumeDTO(resumeService.getResumeById(id));
     }
 
-    @GetMapping
+    @GetMapping("/api")
+    @ResponseBody
     public List<ResumeDTO> getAllResumes() {
         return resumeService.getAllResumes().stream().map(ResumeMapper::toResumeDTO).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping("/api")
+    @ResponseBody
     public ResumeDTO createResume(@RequestBody ResumeDTO resumeDTO) {
         Resume resume = ResumeMapper.toResumeEntity(resumeDTO);
         Resume savedResume = resumeService.saveResume(resume);
         return ResumeMapper.toResumeDTO(savedResume);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/{id}")
+    @ResponseBody
     public ResumeDTO updateResume(@PathVariable Long id, @RequestBody ResumeDTO resumeDTO) {
         Resume resume = ResumeMapper.toResumeEntity(resumeDTO);
         resume.setId(id); // Ensure the entity has the correct ID
@@ -45,9 +56,9 @@ public class ResumeController {
         return ResumeMapper.toResumeDTO(updatedResume);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/{id}")
+    @ResponseBody
     public void deleteResume(@PathVariable Long id) {
         resumeService.deleteResume(id);
     }
-
 }
