@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1 th:text="${resume.name}">Name</h1>
+        <h2 th:text="${resume.jobTitle}">Job Title</h2>
+        <p th:text="${resume.location}">Location</p>
+        <p>
+            <a th:href="${resume.portfolioUrl}">Portfolio</a> |
+            <a th:href="${resume.githubUrl}">GitHub</a> |
+            <a th:href="${resume.linkedinUrl}">Linkedin</a> |
+            <a th:href="${resume.email}">Email</a> |
+            <span th:text="${resume.phone}">Phone</span>
+        </p>
+    </header>
+    <section>
+        <h3>Summary</h3>
+        <p th:text="${resume.summary}">Summary goes here.</p>
+    </section>
+    <section>
+        <h3>Education</h3>
+        <div th:each="education : ${resume.educationList}">
+            <h4 th:text="${education.degree}">Degree</h4>
+            <p th:text="${education.institution}">Institution</p>
+            <p>
+                <span th:text="${education.startDate}">Start Date</span> -
+                <span th:text="${education.endDate}">End Date</span>
+            </p>
+            <p th:text="'GPA: ' + ${education.gpa}">GPA</p>
+            <p th:text="${education.major}">Major</p>
+            <p th:text="${education.minor}">Minor</p>
+        </div>
+    </section>
+    <section>
+        <h3>Experience</h3>
+        <div th:each="experience : ${resume.experienceList}">
+            <h4 th:text="${experience.jobTitle}">Job Title</h4>
+            <p th:text="${experience.company}">Company</p>
+            <p>
+                <span th:text="${experience.startDate}">Start Date</span> -
+                <span th:text="${experience.endDate}">End Date</span>
+            </p>
+            <p th:text="${experience.description}">Description</p>
+            <ul>
+                <li th:each="responsibility : ${experience.responsibilities}"
+                    th:text="${responsibility}">Responsibility</li>
+            </ul>
+        </div>
+    </section>
+</div>
+</body>
+</html>
