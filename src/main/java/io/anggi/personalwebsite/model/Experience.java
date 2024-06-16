@@ -18,6 +18,8 @@ public class Experience {
     private String company;
     private String startDate;
     private String endDate;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne
