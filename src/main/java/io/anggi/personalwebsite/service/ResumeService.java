@@ -29,4 +29,11 @@ public class ResumeService {
         resumeRepository.deleteById(id);
     }
 
+
+    public Resume getResume() {
+        // Fetch first resume from the database
+        return resumeRepository.findById(1L).orElse(new Resume());
+    }
+
 }
+
