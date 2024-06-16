@@ -10,6 +10,7 @@ public class ResumeDTO {
     private String jobTitle;
     private String location;
     private String portfolioUrl;
+    private String linkedinUrl;
     private String githubUrl;
     private String email;
     private String phone;
