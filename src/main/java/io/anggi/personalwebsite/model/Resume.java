@@ -1,6 +1,7 @@
 package io.anggi.personalwebsite.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
@@ -22,6 +23,8 @@ public class Resume {
     private String githubUrl;
     private String email;
     private String phone;
+
+    @Column(columnDefinition = "TEXT")
     private String summary;
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
