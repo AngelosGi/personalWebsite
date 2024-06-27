@@ -54,7 +54,7 @@ public class DummyDataLoader implements CommandLineRunner {
         experience1.setResume(resume);
 
         Experience experience2 = new Experience();
-        experience2.setJobTitle("Store & IT Manager");
+        experience2.setJobTitle("IT Infrastructure and Operations Manager");
         experience2.setCompany("Fototypies.gr");
         experience2.setStartDate("2012");
         experience2.setEndDate("2023");
@@ -96,8 +96,8 @@ public class DummyDataLoader implements CommandLineRunner {
         experience4.setResume(resume);
 
         Education education1 = new Education();
-        education1.setInstitution("Datalabs.edu, acta.edu - AUTH");
-        education1.setDegree("Diploma in IT, Acta - Aristotle University of Thessaloniki. (graduation)");
+        education1.setInstitution("Datalabs.edu, ACTA SA - Spin Off Aristotle University of Thessaloniki");
+        education1.setDegree("Diploma in IT");
         education1.setMajor("Full stack Developer - Certificate");
         education1.setStartDate("March 2023");
         education1.setEndDate("Present");
