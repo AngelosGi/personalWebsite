@@ -28,4 +28,7 @@ public class Experience {
 
     @ElementCollection
     private List<String> responsibilities;
+
+//    @ElementCollection
+//    private List<String> skills;
 }

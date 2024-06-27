@@ -10,4 +10,5 @@ public class ExperienceDTO {
     private String duration;
     private String organization;
     private List<String> responsibilities;
+//    private List<String> skills;
 }
