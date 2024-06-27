@@ -1,5 +1,6 @@
 package io.anggi.personalwebsite.service;
 
+import io.anggi.personalwebsite.exception.ResourceNotFoundException;
 import io.anggi.personalwebsite.model.Education;
 import io.anggi.personalwebsite.repository.EducationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class EducationService {
 
 
     public Education getEducationById(Long id) {
-        return educationRepository.findById(id).orElse(null);
+        return educationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Education not found with id: " + id));
     }
 
     public Education saveEducation(Education education) {
@@ -27,6 +28,7 @@ public class EducationService {
     }
 
     public void deleteEducation(Long id) {
+        educationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Education not found with id: " + id));
         educationRepository.deleteById(id);
     }
 }
