@@ -1,58 +1,195 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Resume</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="description" content="Full Stack Web Developer" />
+    <meta name="keywords" content="resume,cv,Angelos Gian" />
+    <meta name="author" content="Angelos Gian" />
+    <meta name="viewport" content="width=device-width, initial-scale=2.0" />
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet" />
+
+    <!-- Preload Font -->
+    <link rel="preload" href="./fonts/Jost-Medium.woff2" as="font" crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/build.css}" rel="stylesheet" />
+    <link th:href="@{/css/jost.css}" rel="stylesheet" />
+
+    <title th:text="${resume.name} + ' — Resume'">Resume</title>
 </head>
+<!-- Body ----------------------------------------------------------------------- -->
 <body>
-<div class="container">
-    <header>
-        <h1 th:text="${resume.name}">Name</h1>
-        <h2 th:text="${resume.jobTitle}">Job Title</h2>
-        <p th:text="${resume.location}">Location</p>
-        <p>
-            <a th:href="${resume.portfolioUrl}">Portfolio</a> |
-            <a th:href="${resume.githubUrl}">GitHub</a> |
-            <a th:href="${resume.linkedinUrl}">Linkedin</a> |
-            <a th:href="${resume.email}">Email</a> |
-            <span th:text="${resume.phone}">Phone</span>
-        </p>
-    </header>
-    <section>
-        <h3>Summary</h3>
-        <p th:text="${resume.summary}">Summary goes here.</p>
+<main class="font-jost hyphens-manual">
+    <!-- Page -------------------------------------------------------------------------------------------------------->
+    <section class="p-3 my-auto mx-auto max-w-3xl bg-gray-100 rounded-2xl border-4 border-gray-700 sm:p-9 md:p-16 lg:mt-6 print:border-0 page print:max-w-letter print:max-h-letter print:mx-0 print:my-o xsm:p-8 print:bg-white md:max-w-letter md:h-letter lg:h-letter">
+        <!-- Name ---------------------------------------------------------------------------------------------------->
+        <header class="inline-flex justify-between items-baseline mb-2 w-full align-top border-b-4 border-gray-300">
+            <section class="block">
+                <h1 class="mb-0 text-5xl font-bold text-gray-700" th:text="${resume.name}">resume.name</h1>
+                <!--Job Title--------------------------------------------------------------------------------------------------------->
+                <h2 class="m-0 ml-2 text-2xl font-semibold text-gray-700 leading-snugish" th:text="${resume.jobTitle}">resume.jobTitle</h2>
+                <!--Location --------------------------------------------------------------------------------------------------------->
+                <h3 class="m-0 mt-2 ml-2 text-xl font-semibold text-gray-500 leading-snugish" th:text="${resume.location}">resume.location</h3>
+            </section>
+            <!--   Initials Block         -->
+            <section class="justify-between px-3 mt-0 mb-5 text-4xl font-black leading-none text-white bg-gray-700 initials-container print:bg-black" style="padding-bottom: 1.5rem; padding-top: 1.5rem;">
+                <section class="text-center initial">A</section>
+                <section class="text-center initial">N</section>
+                <section class="text-center initial">G</section>
+                <section class="text-center initial">I</section>
+            </section>
+        </header>
+
+        <!-- Column -------------------------------------------------------------------------------------------------->
+        <section class="col-gap-8 print:col-count-2 print:h-letter-col-full col-fill-balance md:col-count-2 md:h-letter-col-full">
+            <section class="flex-col">
+                <!-- Contact Information ------------------------------------------------------------------------------------->
+                <section class="pb-2 mt-4 mb-0 first:mt-0">
+                    <!-- To keep in the same column -------------------------------------------------------------------------->
+                    <section class="break-inside-avoid">
+                        <section class="pb-4 mb-2 border-b-4 border-gray-300 break-inside-avoid">
+                            <ul class="pr-7 list-inside">
+                                <li class="mt-1 leading-normal text-black text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md print:">
+                                    <a th:href="${resume.portfolioUrl}" class="group">
+                                        <span class="mr-2 text-lg font-semibold text-gray-700 leading-snugish">Portfolio:</span>
+                                        <span th:text="${resume.portfolioUrl}">resume.portfolioUrl</span>
+                                        <span class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:">↗</span>
+                                    </a>
+                                </li>
+                                <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
+                                    <a th:href="${resume.githubUrl}" class="group">
+                                        <span class="mr-5 text-lg font-semibold text-gray-700 leading-snugish">Github:</span>
+                                        <span th:text="${resume.githubUrl}">resume.githubUrl</span>
+                                        <span class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:">↗</span>
+                                    </a>
+                                </li>
+                                <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
+                                    <a th:href="${resume.linkedinUrl}" class="group">
+                                        <span class="mr-1 text-lg font-semibold text-gray-700 leading-snugish">LinkedIn:</span>
+                                        <span th:text="${resume.linkedinUrl}">resume.linkedinUrl</span>
+                                        <span class="inline-block font-normal text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black">↗</span>
+                                    </a>
+                                </li>
+                                <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
+                                    <a th:href="${resume.email}" class="group">
+                                        <span class="mr-8 text-lg font-semibold text-gray-700 leading-snugish">Email:</span>
+                                        <span th:text="${resume.email}">resume.email</span>
+                                        <span class="inline-block font-normal text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black">↗</span>
+                                    </a>
+                                </li>
+                                <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
+                                    <a th:href="${resume.phone}">
+                                        <span class="mr-5 text-lg font-semibold text-gray-700 leading-snugish">Phone:</span>
+                                        <span th:text="${resume.phone}">resume.phone</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    </section>
+                </section>
+                <!--Summary ---------------------------------------------------------------------------------------------------------->
+                <section class="pb-2 pb-4 mt-0 border-b-4 border-gray-300 first:mt-0">
+                    <!-- To keep in the same column -->
+                    <section class="break-inside-avoid">
+                        <h2 class="mb-2 text-xl font-bold tracking-widest text-gray-700 print:font-normal">SUMMARY</h2>
+                        <section class="mb-2 break-inside-avoid">
+                            <p class="mt-2 leading-normal text-gray-700 text-md" th:text="${resume.summary}">resume.summary</p>
+                        </section>
+                    </section>
+                </section>
+                <!--Education -------------------------------------------------------------------------------------------------------->
+                <section class="pb-0 mt-2 border-b-4 border-gray-300 first:mt-0 break-inside-avoid">
+                    <!-- To keep in the same column -->
+                    <section class="break-inside-avoid">
+                        <h2 class="mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal">EDUCATION</h2>
+                        <div th:each="education : ${resume.educationList}">
+                            <section class="mt-2 border-b-2 break-inside-avoid">
+                                <header>
+                                    <h3 class="text-lg font-semibold text-gray-700 leading-snugish" th:text="${education.institution}">Institution</h3>
+                                    <p class="leading-normal text-gray-500 text-md">
+                                        <span th:text="${education.startDate}">Start Date</span> &ndash;
+                                        <span th:text="${education.endDate}">End Date</span> |
+                                        <span th:text="${education.degree}">Degree</span>
+                                    </p>
+                                </header>
+                                <ul class="mt-2 list-disc list-inside text-gray-800 text-md">
+                                    <li>
+                                        <span class="font-semibold text-md">Title:</span>
+                                        <span th:text="${education.major}">Major</span>
+                                    </li>
+<!--                                    <li>-->
+<!--                                        <span class="font-semibold text-md">Minor:</span>-->
+<!--                                        <span th:text="${education.minor}">Minor</span>-->
+<!--                                    </li>-->
+                                    <li>
+                                        <span class="font-semibold text-md">GPA:</span>
+                                        <span th:text="${education.gpa}">GPA</span>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </section>
+                </section>
+                <!--Begin Skills ----------------------------------------------------------------------------------------------------->
+                <section class="pb-6 mt-0 mb-4 border-b-4 border-gray-300 first:mt-0 break-inside-avoid">
+                    <!-- To keep in the same column -->
+                    <section class="break-inside-avoid">
+                        <h2 class="mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal">SKILLS</h2>
+                        <section class="mb-0 break-inside-avoid">
+                            <section class="mt-1 last:pb-1">
+                                <ul class="flex flex-wrap -mb-1 font-bold leading-relaxed text-md -mr-1.6">
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">HTML5</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">CSS3</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Python</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Java</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Postgresql</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">mySQL</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Linux</li>
+                                </ul>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+                <!--Experience ------------------------------------------------------------------------------------------------------>
+                <section class="pb-2 pb-4 mt-4 border-b-4 border-gray-300 first:mt-0">
+                    <!-- To keep in the same column ------------------------------------------------------------------------->
+                    <section class="break-inside-avoid">
+                        <h2 class="mb-2 text-xl font-black tracking-widest text-gray-800 print:font-normal">EXPERIENCE</h2>
+                        <div th:each="experience : ${resume.experienceList}">
+                            <section class="mb-2 border-b-2 border-gray-300 break-inside-avoid">
+                                <header>
+                                    <h3 class="font-semibold text-gray-800 text-md leading-snugish" th:text="${experience.jobTitle}">Job Title</h3>
+                                    <p class="text-m text-gray-500 leading-snugish">
+                                        <span th:text="${experience.startDate}">Start Date</span> &ndash;
+                                        <span th:text="${experience.endDate}">End Date</span> |
+                                        <span th:text="${experience.company}">Company</span>
+                                    </p>
+                                </header>
+                                <ul class="pl-3 mt-2 font-normal text-gray-700 text-md leading-snugish">
+                                    <li th:each="responsibility : ${experience.responsibilities}">
+                                        <span class="text-gray-500 transform -translate-y-px select-none">›</span>
+                                        <span th:text="${responsibility}">Responsibility</span>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <!-- end Column -->
     </section>
-    <section>
-        <h3>Education</h3>
-        <div th:each="education : ${resume.educationList}">
-            <h4 th:text="${education.degree}">Degree</h4>
-            <p th:text="${education.institution}">Institution</p>
-            <p>
-                <span th:text="${education.startDate}">Start Date</span> -
-                <span th:text="${education.endDate}">End Date</span>
-            </p>
-            <p th:text="'GPA: ' + ${education.gpa}">GPA</p>
-            <p th:text="${education.major}">Major</p>
-            <p th:text="${education.minor}">Minor</p>
-        </div>
-    </section>
-    <section>
-        <h3>Experience</h3>
-        <div th:each="experience : ${resume.experienceList}">
-            <h4 th:text="${experience.jobTitle}">Job Title</h4>
-            <p th:text="${experience.company}">Company</p>
-            <p>
-                <span th:text="${experience.startDate}">Start Date</span> -
-                <span th:text="${experience.endDate}">End Date</span>
-            </p>
-            <p th:text="${experience.description}">Description</p>
-            <ul>
-                <li th:each="responsibility : ${experience.responsibilities}"
-                    th:text="${responsibility}">Responsibility</li>
-            </ul>
-        </div>
-    </section>
-</div>
+    <!-- end Page -->
+</main>
 </body>
 </html>
