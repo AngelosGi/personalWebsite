@@ -46,6 +46,7 @@
                 <section class="text-center initial">A</section>
                 <section class="text-center initial">N</section>
                 <section class="text-center initial">G</section>
+                <section class="text-center initial">G</section>
                 <section class="text-center initial">I</section>
             </section>
         </header>
@@ -60,35 +61,35 @@
                         <section class="pb-4 mb-2 border-b-4 border-gray-300 break-inside-avoid">
                             <ul class="pr-7 list-inside">
                                 <li class="mt-1 leading-normal text-black text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md print:">
-                                    <a th:href="${resume.portfolioUrl}" class="group">
+                                    <a th:href="${resume.portfolioUrl}" target="_blank" class="group">
                                         <span class="mr-2 text-lg font-semibold text-gray-700 leading-snugish">Portfolio:</span>
-                                        <span th:text="${resume.portfolioUrl}">resume.portfolioUrl</span>
+                                        <span  th:text="${resume.portfolioUrl}">resume.portfolioUrl</span>
                                         <span class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:">↗</span>
                                     </a>
                                 </li>
                                 <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
-                                    <a th:href="${resume.githubUrl}" class="group">
+                                    <a th:href="${resume.githubUrl}" target="_blank" class="group">
                                         <span class="mr-5 text-lg font-semibold text-gray-700 leading-snugish">Github:</span>
                                         <span th:text="${resume.githubUrl}">resume.githubUrl</span>
                                         <span class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:">↗</span>
                                     </a>
                                 </li>
                                 <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
-                                    <a th:href="${resume.linkedinUrl}" class="group">
+                                    <a th:href="${resume.linkedinUrl}" target="_blank" class="group">
                                         <span class="mr-1 text-lg font-semibold text-gray-700 leading-snugish">LinkedIn:</span>
                                         <span th:text="${resume.linkedinUrl}">resume.linkedinUrl</span>
                                         <span class="inline-block font-normal text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black">↗</span>
                                     </a>
                                 </li>
                                 <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
-                                    <a th:href="${resume.email}" class="group">
-                                        <span class="mr-8 text-lg font-semibold text-gray-700 leading-snugish">Email:</span>
+                                    <a th:href="${resume.email}" target="_blank" class="group">
+                                        <span class="mr-7 text-lg font-semibold text-gray-700 leading-snugish">Email:</span>
                                         <span th:text="${resume.email}">resume.email</span>
-                                        <span class="inline-block font-normal text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black">↗</span>
+                                        <span class="inline-block font-normal text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black"></span>
                                     </a>
                                 </li>
                                 <li class="mt-1 leading-normal text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md">
-                                    <a th:href="${resume.phone}">
+                                    <a th:href="${resume.phone}" target="_blank">
                                         <span class="mr-5 text-lg font-semibold text-gray-700 leading-snugish">Phone:</span>
                                         <span th:text="${resume.phone}">resume.phone</span>
                                     </a>
@@ -148,10 +149,14 @@
                         <section class="mb-0 break-inside-avoid">
                             <section class="mt-1 last:pb-1">
                                 <ul class="flex flex-wrap -mb-1 font-bold leading-relaxed text-md -mr-1.6">
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Java</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Spring</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Python</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">FastAPI</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">MVC</li>
+                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">REST APIs</li>
                                     <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">HTML5</li>
                                     <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">CSS3</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Python</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Java</li>
                                     <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Postgresql</li>
                                     <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">mySQL</li>
                                     <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Linux</li>
