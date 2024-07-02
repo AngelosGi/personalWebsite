@@ -88,6 +88,15 @@ To run the Personal Website API locally, follow these steps:
 
 ## API Endpoints
 
+### Resume
+
+- **GET /resume**: Retrieve the resume for rendering with Thymeleaf.
+- **GET /api/resume/{id}**: Retrieve a specific resume record by ID.
+- **GET /api/resume**: Retrieve all resume records.
+- **POST /api/resume**: Create a new resume record.
+- **PUT /api/resume/{id}**: Update an existing resume record by ID.
+- **DELETE /api/resume/{id}**: Delete a resume record by ID.
+
 ### Education
 
 - **GET /api/education**: Retrieve all education records.
@@ -104,20 +113,12 @@ To run the Personal Website API locally, follow these steps:
 - **PUT /api/experience/{id}**: Update an existing experience record by ID.
 - **DELETE /api/experience/{id}**: Delete an experience record by ID.
 
-### Resume
-
-- **GET /resume**: Retrieve the resume for rendering with Thymeleaf.
-- **GET /api/resume/{id}**: Retrieve a specific resume record by ID.
-- **GET /api/resume**: Retrieve all resume records.
-- **POST /api/resume**: Create a new resume record.
-- **PUT /api/resume/{id}**: Update an existing resume record by ID.
-- **DELETE /api/resume/{id}**: Delete a resume record by ID.
-
 ---
 By following these steps and utilizing the provided endpoints, you can effectively manage and interact with the personal website data through this API.
 
 
 ```
-ToDo - auth
-Bug - when updating resume info via api, education and experience_responsibilities lose the ""resume_id"" that links them to the resume**.
+ToDo - auth, add more resume templates 
+Bug - when updating resume info via api, education and experience_responsibilities lose the ""resume_id"" that links them to the resume.
+
 ```
