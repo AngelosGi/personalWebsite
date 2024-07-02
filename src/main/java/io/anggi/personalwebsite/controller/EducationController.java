@@ -17,7 +17,7 @@ public class EducationController {
     @Autowired
     private EducationService educationService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<EducationDTO> getAllEducations() {
         return educationService.getAllEducations().stream()
                 .map(ResumeMapper::toEducationDTO)
@@ -29,12 +29,12 @@ public class EducationController {
         return ResumeMapper.toEducationDTO(educationService.getEducationById(id));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public EducationDTO createEducation(@RequestBody EducationDTO educationDTO) {
         return ResumeMapper.toEducationDTO(educationService.saveEducation(ResumeMapper.toEducationEntity(educationDTO)));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public EducationDTO updateEducation(@PathVariable Long id, @RequestBody EducationDTO educationDTO) {
         // Fetch the existing education to maintain the resume reference
         Education existingEducation = educationService.getEducationById(id);
@@ -45,7 +45,7 @@ public class EducationController {
         return ResumeMapper.toEducationDTO(updatedEducation);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteEducation(@PathVariable Long id) {
         educationService.deleteEducation(id);
     }
