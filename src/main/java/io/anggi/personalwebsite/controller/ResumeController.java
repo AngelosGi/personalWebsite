@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/resume")
+@RequestMapping("/")
 public class ResumeController {
 
     @Autowired
     private ResumeService resumeService;
 
-    // Thymeleaf endpoint
-    @GetMapping
-    public String getResume(Model model) {
-        Resume resume = resumeService.getResume();
+    // Thymeleaf endpoint to fetch resume by ID
+    @GetMapping("resume/{id}")
+    public String getResume(@PathVariable Long id, Model model) {
+        Resume resume = resumeService.getResumeById(id);
         model.addAttribute("resume", resume);
         return "resume";
     }
@@ -33,13 +33,13 @@ public class ResumeController {
         return ResumeMapper.toResumeDTO(resumeService.getResumeById(id));
     }
 
-    @GetMapping("/api")
+    @GetMapping("/api/all")
     @ResponseBody
     public List<ResumeDTO> getAllResumes() {
         return resumeService.getAllResumes().stream().map(ResumeMapper::toResumeDTO).collect(Collectors.toList());
     }
 
-    @PostMapping("/api")
+    @PostMapping("/api/add")
     @ResponseBody
     public ResumeDTO createResume(@RequestBody ResumeDTO resumeDTO) {
         Resume resume = ResumeMapper.toResumeEntity(resumeDTO);
@@ -47,7 +47,7 @@ public class ResumeController {
         return ResumeMapper.toResumeDTO(savedResume);
     }
 
-    @PutMapping("/api/{id}")
+    @PutMapping("/api/edit/{id}")
     @ResponseBody
     public ResumeDTO updateResume(@PathVariable Long id, @RequestBody ResumeDTO resumeDTO) {
         Resume resume = ResumeMapper.toResumeEntity(resumeDTO);
@@ -56,7 +56,7 @@ public class ResumeController {
         return ResumeMapper.toResumeDTO(updatedResume);
     }
 
-    @DeleteMapping("/api/{id}")
+    @DeleteMapping("/api/delete/{id}")
     @ResponseBody
     public void deleteResume(@PathVariable Long id) {
         resumeService.deleteResume(id);

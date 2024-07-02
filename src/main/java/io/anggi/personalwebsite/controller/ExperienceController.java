@@ -22,29 +22,32 @@ public class ExperienceController {
         return ResumeMapper.toExperienceDTO(experienceService.getExperienceById(id));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ExperienceDTO> getAllExperiences() {
         return experienceService.getAllExperiences().stream()
                 .map(ResumeMapper::toExperienceDTO)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping("/edit")
     public ExperienceDTO createExperience(@RequestBody ExperienceDTO experienceDTO) {
         Experience experience = ResumeMapper.toExperienceEntity(experienceDTO);
         Experience savedExperience = experienceService.saveExperience(experience);
         return ResumeMapper.toExperienceDTO(savedExperience);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ExperienceDTO updateExperience(@PathVariable Long id, @RequestBody ExperienceDTO experienceDTO) {
+        // Fetch the existing experience to maintain the resume reference
+        Experience existingExperience = experienceService.getExperienceById(id);
         Experience experience = ResumeMapper.toExperienceEntity(experienceDTO);
-        experience.setId(id); // Ensure the entity has the correct ID
+        experience.setId(id);
+        experience.setResume(existingExperience.getResume()); // Maintain the resume reference
         Experience updatedExperience = experienceService.saveExperience(experience);
         return ResumeMapper.toExperienceDTO(updatedExperience);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteExperience(@PathVariable Long id) {
         experienceService.deleteExperience(id);
     }

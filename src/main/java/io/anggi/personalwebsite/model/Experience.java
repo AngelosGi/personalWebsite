@@ -3,6 +3,8 @@ package io.anggi.personalwebsite.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.List;
 
 @Entity
@@ -24,9 +26,11 @@ public class Experience {
 
     @ManyToOne
     @JoinColumn(name = "resume_id")
+    @ToString.Exclude
     private Resume resume;
 
     @ElementCollection
+    @Column(length = 1000)
     private List<String> responsibilities;
 
 //    @ElementCollection

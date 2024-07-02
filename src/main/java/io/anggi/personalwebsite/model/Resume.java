@@ -1,9 +1,10 @@
 package io.anggi.personalwebsite.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.List;
 
 @Entity
@@ -27,9 +28,11 @@ public class Resume {
     @Column(columnDefinition = "TEXT")
     private String summary;
 
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Education> educationList;
 
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Experience> experienceList;
 }
