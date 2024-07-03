@@ -29,7 +29,7 @@ public class ExperienceController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/add")
     public ExperienceDTO createExperience(@RequestBody ExperienceDTO experienceDTO) {
         Experience experience = ResumeMapper.toExperienceEntity(experienceDTO);
         Experience savedExperience = experienceService.saveExperience(experience);
