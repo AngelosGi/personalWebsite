@@ -98,9 +98,3 @@ To run the Personal Resume Website API locally, follow these steps:
 - hide db credentials for production. 👀
 
 ---
-
-By following these steps and utilizing the provided endpoints, you can effectively manage and interact with the personal website data through this API.
-
----
-
-This revision aims to minimize redundancy and ensure each section delivers unique, essential information.
