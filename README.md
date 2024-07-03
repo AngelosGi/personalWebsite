@@ -1,6 +1,5 @@
 # Personal Resume Website API
 
-
 This project is a Spring Boot-based APP for managing a personal Resume website. It was inspired by the static HTML and CSS resume found in the [Thomashighbaugh's repository](https://github.com/Thomashighbaugh/resume).
 
 Here are the steps taken to create this project:
@@ -28,6 +27,14 @@ Here are the steps taken to create this project:
    - Implemented a global exception handler using `@ControllerAdvice`.
    - Added validation to ensure data integrity and correctness.
 
+7. **Security Authentication**:
+   - Implemented basic authentication for the API.
+   - Configured security to allow public access to GET endpoints and restrict POST, PUT, and DELETE endpoints to authenticated users.
+   - Utilized Spring Security to manage authentication and authorization.
+   - Created a `User` entity and repository to store user credentials.
+   - Implemented `MyUserDetailsService` to load user-specific data for authentication.
+   - Configured a password encoder to hash passwords securely.
+
 ---
 
 ## Technologies Used
@@ -38,6 +45,7 @@ Here are the steps taken to create this project:
 - **Thymeleaf:** Thymeleaf is utilized as the template engine for rendering web pages, providing fast and efficient handling of HTML templates.
 - **Swagger UI:** Swagger UI is integrated to provide interactive documentation for the API endpoints, allowing users to explore and test the available functionalities visually.
 - **Docker:** Docker is employed to containerize the PostgreSQL database, allowing for easy setup and management of the database environment. It ensures consistency and portability across different development and deployment environments.
+- **Spring Security:** Spring Security is used to secure the API endpoints, manage user authentication, and restrict access to certain operations.
 
 ---
 
@@ -46,6 +54,7 @@ Here are the steps taken to create this project:
 - **CRUD Operations:** Create, read, update, and delete educational experiences, work experiences, and resume details.
 - **Interactive Documentation:** Swagger UI provides an interactive API documentation interface for easy exploration and testing.
 - **Modular Structure:** The project follows a clean and modular structure for scalability and maintainability.
+- **Security Authentication:** Basic authentication is implemented to secure the API endpoints and manage user access.
 
 ---
 
@@ -56,8 +65,9 @@ To run the Personal Website API locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   Https: git clone https://github.com/AngelosGi/personal-website.git
-   SSH: git clone git@github.com:AngelosGi/personal-website.git
+   git clone https://github.com/AngelosGi/personal-website.git
+   # Or use SSH
+   git clone git@github.com:AngelosGi/personal-website.git
    ```
 
 2. Install dependencies:
@@ -73,30 +83,28 @@ To run the Personal Website API locally, follow these steps:
 
 4. Start the Spring Boot application:
 
-5. Access the API at `http://localhost:8080/...` in your browser or API client.
+   ```bash
+   mvn spring-boot:run
+   or just pres the play button in your IDE xD
+   ```
+
+5. Access the API at `http://localhost:8080/api/...` in your browser or API client.
 
 6. Access the resume template at `http://localhost:8080/resume/{id}`
-
----
 
 ## Usage
 
 - Access the Swagger documentation at `http://localhost:8080/swagger-ui/index.html` to explore and interact with the API endpoints.
 - Use tools like Postman to make requests to the API endpoints.
 
----
-
 ## API Endpoints
 
-![image](https://github.com/AngelosGi/personalWebsite/assets/144551151/62cf9e5d-544f-485f-a793-3ca65d65fb5a)
+![image](https://github.com/AngelosGi/personalWebsite/assets/144551151/173b2aa0-4274-4c96-9a2a-8192efab2643)
 
-
----
 By following these steps and utilizing the provided endpoints, you can effectively manage and interact with the personal website data through this API.
 
-
-```
-ToDo
-- Auth.
+### ToDo
+- ~~Auth~~ Done
+- Dokerize app & deploy (or something along these lines)
 - Add more resume templates.
 ```
