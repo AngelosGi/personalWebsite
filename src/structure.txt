@@ -1,0 +1,211 @@
+src/
+└── main/
+    ├── java/
+    │   └── io/
+    │       └── anggi/
+    │           └── personalwebsite/
+    │               ├── config/
+    │               │   ├── PasswordEncoderGenerator.java
+    │               │   ├── SecurityConfiguration.java
+    │               ├── controller/
+    │               │   ├── EducationController.java
+    │               │   ├── ExperienceController.java
+    │               │   └── ResumeController.java
+    │               ├── dto/
+    │               │   ├── EducationDTO.java
+    │               │   ├── ExperienceDTO.java
+    │               │   └── ResumeDTO.java
+    │               ├── exception/
+    │               │   ├── ErrorDetails.java
+    │               │   ├── GlobalExceptionHandler.java
+    │               │   └── ResourceNotFoundException.java
+    │               ├── mapper/
+    │               │   └── ResumeMapper.java
+    │               ├── model/
+    │               │   ├── Education.java
+    │               │   ├── Experience.java
+    │               │   ├── Resume.java
+    │               │   └── User.java
+    │               ├── repository/
+    │               │   ├── EducationRepository.java
+    │               │   ├── ExperienceRepository.java
+    │               │   ├── ResumeRepository.java
+    │               │   └── UserRepository.java
+    │               ├── service/
+    │               │   ├── EducationService.java
+    │               │   ├── ExperienceService.java
+    │               │   ├── MyUserService.java
+    │               │   └── ResumeService.java
+    │               ├── DummyDataLoader.java
+    │               └── PersonalWebsiteApplication.java
+    └── resources/
+        ├── templates/
+        │   └── resume.html
+        └── application.properties
+
+============================================================================================================
+
+JSON Resume Schema
+
+{
+  "id": 0,
+  "name": "Angelos Giannopoulos",
+  "jobTitle": "Junior Software Developer",
+  "location": "Thessaloniki, GR",
+  "portfolioUrl": "http://anggi.io/",
+  "linkedinUrl": "https://linkedin.com/in/anggian/",
+  "githubUrl": "http://github.com/AngelosGi",
+  "email": "giannopoulos.ang@gmail.com",
+  "phone": "+30 6955151477",
+  "summary": "Junior Web Developer with a background in technical support and software integration.\nExperience in resolving software and hardware issues, maintaining CRM records, and collaborating with teams to meet targets.\nKnowledgeable in various web technologies, including Java, Spring, Python, FastAPI, PHP, laravel, MVC architecture, and databases, with a customer-focused approach.\n\nEager to contribute to innovative software development projects and grow within a dynamic company.",
+  "educations": [
+    {
+      "id": 0,
+      "institution": "Datalabs.edu, ACTA SA - Spin Off Aristotle University of Thessaloniki",
+      "duration": "March 2023 - Present",
+      "degree": "Certificate",
+      "major": "Diploma in Information Technology",
+      "minor": null,
+      "gpa": 0
+    },
+    {
+      "id": 0,
+      "institution": "EPAL El. Venizelou",
+      "duration": "2006 - 2009",
+      "degree": "General upper secondary school certificate",
+      "major": "IT & Applications Technician",
+      "minor": null,
+      "gpa": 0
+    }
+  ],
+  "experiences": [
+    {
+      "id": 0,
+      "title": "Technical Support Specialist",
+      "duration": "2023 - Present",
+      "organization": "Teleperformance",
+      "responsibilities": [
+        "Delivered technical support via phone, email, and chat for various tech products.",
+        "Diagnosed and resolved software, hardware, and telecommunications issues.",
+        "Collaborated with the development team to identify, document, and escalate software and platform issues by creating detailed and actionable tickets.",
+        "Maintained accurate records of customer interactions using CRM software.",
+        "Worked closely with team members to meet performance and quality targets.",
+        "Enhanced product knowledge through ongoing training."
+      ]
+    },
+    {
+      "id": 0,
+      "title": "IT Infrastructure and Operations Manager",
+      "duration": "2012 - 2023",
+      "organization": "Fototypies.gr",
+      "responsibilities": [
+        "Managed IT infrastructure, including custom software applications.",
+        "Handled software updates, system integrations, and troubleshooting.",
+        "Trained employees on software usage, providing ongoing technical support.",
+        "Collaborated with vendors and IT teams for software customization.",
+        "Oversaw store operations, including inventory control and employee management."
+      ]
+    },
+    {
+      "id": 0,
+      "title": "Store Manager, E-shop",
+      "duration": "2009 - 2011",
+      "organization": "Laventzakis' Ceramics",
+      "responsibilities": [
+        "Managed e-shop and retail store operations.",
+        "Handled customer service, order processing, and inventory control.",
+        "Streamlined retail and wholesale order processes."
+      ]
+    },
+    {
+      "id": 0,
+      "title": "Technical Support, Computers and networks",
+      "duration": "2007 - 2009",
+      "organization": "TripleW Internet Gaming Station",
+      "responsibilities": [
+        "Managed IT infrastructure for 50 PCs and multiple servers.",
+        "Managed software applications, games and platforms (ERP, Steam, Blizzard, CD keys).",
+        "Troubleshot, coordinated software and game updates, patches, and system integrations.",
+        "Trained employees on software usage and provided ongoing support and guidance."
+      ]
+    }
+  ]
+}
+
+========================================================================================================
+
+{
+  "id": 0,
+  "name": "John Doe",
+  "jobTitle": "Software Engineer",
+  "location": "San Francisco, CA",
+  "portfolioUrl": "http://johndoe.dev/",
+  "linkedinUrl": "https://linkedin.com/in/johndoe/",
+  "githubUrl": "http://github.com/johndoe",
+  "email": "john.doe@example.com",
+  "phone": "+1 415-555-1234",
+  "summary": "Experienced Software Engineer with a strong background in web development and cloud computing. Proficient in modern frameworks and technologies such as React, Node.js, AWS, and Docker. Passionate about building scalable and efficient software solutions.",
+  "educations": [
+    {
+      "id": 0,
+      "institution": "University of California, Berkeley",
+      "duration": "2014 - 2018",
+      "degree": "Bachelor of Science",
+      "major": "Computer Science",
+      "minor": null,
+      "gpa": 3.8
+    },
+    {
+      "id": 0,
+      "institution": "San Francisco High School",
+      "duration": "2010 - 2014",
+      "degree": "High School Diploma",
+      "major": "Science",
+      "minor": null,
+      "gpa": 3.9
+    }
+  ],
+  "experiences": [
+    {
+      "id": 0,
+      "title": "Software Engineer",
+      "duration": "2019 - Present",
+      "organization": "Tech Solutions Inc.",
+      "responsibilities": [
+        "Developed and maintained web applications using React and Node.js.",
+        "Implemented cloud solutions using AWS services like EC2, S3, and Lambda.",
+        "Collaborated with cross-functional teams to define, design, and ship new features.",
+        "Wrote clean, maintainable code following best practices and design patterns.",
+        "Participated in code reviews and provided constructive feedback to peers."
+      ]
+    },
+    {
+      "id": 0,
+      "title": "Junior Developer",
+      "duration": "2018 - 2019",
+      "organization": "Startup Hub",
+      "responsibilities": [
+        "Assisted in the development of web applications using JavaScript and PHP.",
+        "Conducted testing and debugging of software applications.",
+        "Participated in daily stand-ups and sprint planning meetings.",
+        "Maintained documentation and provided support for ongoing projects.",
+        "Learned and adapted to new technologies and frameworks as needed."
+      ]
+    },
+    {
+      "id": 0,
+      "title": "Intern",
+      "duration": "Summer 2017 - null",
+      "organization": "Innovative Tech",
+      "responsibilities": [
+        "Worked on a team project to develop a prototype mobile app.",
+        "Performed software testing and reported bugs to senior developers.",
+        "Assisted with the integration of APIs and third-party services.",
+        "Contributed to the design and user experience of the application.",
+        "Gained hands-on experience in a fast-paced development environment."
+      ]
+    }
+  ]
+}
+
+===========================================================================================================
