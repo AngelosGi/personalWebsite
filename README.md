@@ -73,52 +73,30 @@ To run the Personal Website API locally, follow these steps:
 
 4. Start the Spring Boot application:
 
-5. Access the API at `http://localhost:8080` in your browser or API client.
+5. Access the API at `http://localhost:8080/...` in your browser or API client.
 
-6. Access the resume template at `http://localhost:8080/resume`
+6. Access the resume template at `http://localhost:8080/resume/{id}`
 
 ---
 
 ## Usage
 
-- Access the Swagger documentation at `http://localhost:8080/swagger-ui.html` to explore and interact with the API endpoints.
+- Access the Swagger documentation at `http://localhost:8080/swagger-ui/index.html` to explore and interact with the API endpoints.
 - Use tools like Postman to make requests to the API endpoints.
 
 ---
 
 ## API Endpoints
 
-### Resume
+![image](https://github.com/AngelosGi/personalWebsite/assets/144551151/62cf9e5d-544f-485f-a793-3ca65d65fb5a)
 
-- **GET /resume**: Retrieve the resume for rendering with Thymeleaf.
-- **GET /api/resume/{id}**: Retrieve a specific resume record by ID.
-- **GET /api/resume**: Retrieve all resume records.
-- **POST /api/resume**: Create a new resume record.
-- **PUT /api/resume/{id}**: Update an existing resume record by ID.
-- **DELETE /api/resume/{id}**: Delete a resume record by ID.
-
-### Education
-
-- **GET /api/education**: Retrieve all education records.
-- **GET /api/education/{id}**: Retrieve a specific education record by ID.
-- **POST /api/education**: Create a new education record.
-- **PUT /api/education/{id}**: Update an existing education record by ID.
-- **DELETE /api/education/{id}**: Delete an education record by ID.
-
-### Experience
-
-- **GET /api/experience**: Retrieve all experience records.
-- **GET /api/experience/{id}**: Retrieve a specific experience record by ID.
-- **POST /api/experience**: Create a new experience record.
-- **PUT /api/experience/{id}**: Update an existing experience record by ID.
-- **DELETE /api/experience/{id}**: Delete an experience record by ID.
 
 ---
 By following these steps and utilizing the provided endpoints, you can effectively manage and interact with the personal website data through this API.
 
 
 ```
-ToDo - auth, add more resume templates 
-Bug - when updating resume info via api, education and experience_responsibilities lose the ""resume_id"" that links them to the resume.
-
+ToDo
+- Auth.
+- Add more resume templates.
 ```
