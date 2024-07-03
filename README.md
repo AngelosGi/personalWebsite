@@ -73,9 +73,9 @@ To run the Personal Website API locally, follow these steps:
 
 4. Start the Spring Boot application:
 
-5. Access the API at `http://localhost:8080` in your browser or API client.
+5. Access the API at `http://localhost:8080/...` in your browser or API client.
 
-6. Access the resume template at `http://localhost:8080/resume`
+6. Access the resume template at `http://localhost:8080/resume/{id}`
 
 ---
 
