@@ -92,9 +92,9 @@ To run the Personal Resume Website API locally, follow these steps:
 ### To-Do
 
 - ~~Auth~~ Done
+- ~~hide db credentials for production. 👀~~ Done (add env variables)
 - Dockerize app & deploy (or something)
-- add skills from db
+- add skills from db (later, I need to deploy it first.)
 - Add more resume templates
-- hide db credentials for production. 👀
 
 ---
