@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Full Stack Web Developer"/>
+    <meta name="keywords" content="resume,cv,Angelos Gian"/>
+    <meta name="author" content="Angelos Gian"/>
+    <meta name="viewport" content="width=device-width, initial-scale=2.0"/>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/build.css}" rel="stylesheet"/>
+
+    <title>Error — Resume</title>
+</head>
+<!-- Body ----------------------------------------------------------------------- -->
+<body>
+<main class="font-jost hyphens-manual">
+    <!-- Page -------------------------------------------------------------------------------------------------------->
+    <section
+            class="p-3 my-auto mx-auto max-w-3xl bg-red-100 rounded-2xl border-4 border-red-700 sm:p-9 md:p-16 lg:mt-6 print:border-0 page print:max-w-letter print:max-h-letter print:mx-0 print:my-o xsm:p-8 print:bg-white md:max-w-letter md:h-letter lg:h-letter">
+        <!-- Header --------------------------------------------------------------------------------------------------->
+        <header class="inline-flex justify-between items-baseline mb-2 w-full align-top border-b-4 border-red-300">
+            <h1 class="mb-0 text-4xl font-bold text-red-700">Error: <span th:text="${status}"></span></h1>
+        </header>
+
+        <!-- Error Details ------------------------------------------------------------------------------------------->
+        <section class="mt-4">
+            <h2 class="mb-2 text-xl font-semibold text-red-700">Message: <span th:text="${errorMessage}"></span></h2>
+            <p class="text-md text-gray-700">Timestamp: <span
+                    th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+            <p class="text-md text-gray-700">Details: <span th:text="${details}"></span></p>
+        </section>
+
+        <!-- Suggestion ----------------------------------------------------------------------------------------------->
+        <section class="mt-4">
+            <h3 class="mb-2 text-lg font-bold text-gray-600">What can you do?</h3>
+            <ul class="list-disc pl-5 text-gray-500">
+                <li>Check the URL for typos.</li>
+                <li>Return to the <a href="/" class="text-blue-600 underline">home page</a>.</li>
+                <li>If the problem persists, wait till I fix it.</li>
+            </ul>
+        </section>
+    </section>
+    <!-- end Page -->
+</main>
+</body>
+</html>
