@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RedirectionController {
 
-    @GetMapping("/")
+    @GetMapping({"/", "/resume", "/resume/"})
     public String redirectToResume() {
         return "redirect:/resume/1";
     }
