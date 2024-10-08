@@ -1,29 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Full Stack Web Developer" />
-    <meta name="keywords" content="resume,cv,Angelos Gian" />
-    <meta name="author" content="Angelos Gian" />
-    <meta name="viewport" content="width=device-width, initial-scale=2.0" />
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Full Stack Web Developer"/>
+    <meta name="keywords" content="resume,cv,Angelos Gian"/>
+    <meta name="author" content="Angelos Gian"/>
+    <meta name="viewport" content="width=device-width, initial-scale=2.0"/>
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet" />
-
-    <!-- Preload Font -->
-    <link rel="preload" href="./fonts/Jost-Medium.woff2" as="font" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet"/>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/css/build.css}" rel="stylesheet" />
-    <link th:href="@{/css/jost.css}" rel="stylesheet" />
 
     <title th:text="${resume.name} + ' — Resume'">Resume</title>
 </head>
@@ -63,7 +58,7 @@
                                 <li class="mt-1 leading-normal text-black text-gray-500 transition duration-100 ease-in hover:text-gray-700 text-md print:">
                                     <a th:href="${resume.portfolioUrl}" target="_blank" class="group">
                                         <span class="mr-2 text-lg font-semibold text-gray-700 leading-snugish">Portfolio:</span>
-                                        <span  th:text="${resume.portfolioUrl}">resume.portfolioUrl</span>
+                                        <span th:text="${resume.portfolioUrl}">resume.portfolioUrl</span>
                                         <span class="inline-block font-normal text-black text-gray-500 transition duration-100 ease-in group-hover:text-gray-700 print:text-black print:">↗</span>
                                     </a>
                                 </li>
