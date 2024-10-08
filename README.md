@@ -24,6 +24,8 @@ This project is a Spring Boot-based app for managing a personal resume website. 
    - Configured security to allow public access to GET endpoints and restrict POST, PUT, and DELETE endpoints to authenticated users.
    - Utilized Spring Security and implemented `MyUserDetailsService` for user authentication.
    - Secured password storage with a password encoder.
+8. **Continuous integration and Continuous Delivery CI/CD**
+   - CI/DI deployment with GitHub and render.
 
 ---
 
@@ -36,6 +38,7 @@ This project is a Spring Boot-based app for managing a personal resume website. 
 - **Swagger UI**: For interactive API documentation.
 - **Docker**: For containerizing PostgreSQL.
 - **Spring Security**: For securing API endpoints and managing user authentication.
+- **Continuous integration and continuous delivery CI/CD**
 
 ---
 
