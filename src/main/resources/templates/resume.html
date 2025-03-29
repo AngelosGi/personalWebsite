@@ -48,6 +48,7 @@
                 <section class="text-center initial animate-pulse"><a href="https://anggi.io/swagger-ui/index.html" style="color: inherit; text-decoration: none;">A</a></section>
                 <section class="text-center initial">N</section>
                 <section class="text-center initial">G</section>
+                <section class="text-center initial">-</section>
                 <section class="text-center initial">G</section>
                 <section class="text-center initial">I</section>
             </section>
@@ -111,28 +112,28 @@
                     <!-- To keep in the same column -->
                     <section class="break-inside-avoid">
                         <h2 class="mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal">EDUCATION</h2>
-                        <div th:each="education : ${resume.educationList}">
+                        <div th:each="entry : ${resume.educationEntries}">
                             <section class="mt-2 border-b-2 break-inside-avoid">
                                 <header>
-                                    <h3 class="text-lg font-semibold text-gray-700 leading-snugish" th:text="${education.institution}">Institution</h3>
+                                    <h3 class="text-lg font-semibold text-gray-700 leading-snugish" th:text="${entry.institution}">Institution</h3>
                                     <p class="leading-normal text-gray-500 text-md">
-                                        <span th:text="${education.startDate}">Start Date</span> &ndash;
-                                        <span th:text="${education.endDate}">End Date</span> |
-                                        <span th:text="${education.degree}">Degree</span>
+                                        <span th:text="${entry.startDate}">Start Date</span> &ndash;
+                                        <span th:text="${entry.endDate}">End Date</span> |
+                                        <span th:text="${entry.degree}">Degree</span>
                                     </p>
                                 </header>
                                 <ul class="mt-2 list-disc list-inside text-gray-800 text-md">
                                     <li>
                                         <span class="font-semibold text-md">Title:</span>
-                                        <span th:text="${education.major}">Major</span>
+                                        <span th:text="${entry.major}">Major</span>
                                     </li>
 <!--                                    <li>-->
 <!--                                        <span class="font-semibold text-md">Minor:</span>-->
-<!--                                        <span th:text="${education.minor}">Minor</span>-->
+<!--                                        <span th:text="${entry.minor}">Minor</span>-->
 <!--                                    </li>-->
 <!--                                    <li>-->
 <!--                                        <span class="font-semibold text-md">GPA:</span>-->
-<!--                                        <span th:text="${education.gpa}">GPA</span>-->
+<!--                                        <span th:text="${entry.gpa}">GPA</span>-->
 <!--                                    </li>-->
                                 </ul>
                             </section>
@@ -147,20 +148,12 @@
                         <section class="mb-0 break-inside-avoid">
                             <section class="mt-1 last:pb-1">
                                 <ul class="flex flex-wrap -mb-1 font-bold leading-relaxed text-md -mr-1.6">
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Java</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Spring</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Python</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">FastAPI</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">MVC</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">REST APIs</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Swagger UI</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Hibernate</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Postgresql</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">mySQL</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Linux</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">Docker</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">HTML5</li>
-                                    <li class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">CSS-Tailwind</li>
+                                    <!-- Loop through skills from the resume object -->
+                                    <li th:each="skill : ${resume.skills}"
+                                        th:text="${skill}"
+                                        class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">
+                                        Skill Placeholder
+                                    </li>
                                 </ul>
                             </section>
                         </section>
@@ -171,18 +164,24 @@
                     <!-- To keep in the same column ------------------------------------------------------------------------->
                     <section class="break-inside-avoid">
                         <h2 class="mb-2 text-xl font-black tracking-widest text-gray-800 print:font-normal">EXPERIENCE</h2>
-                        <div th:each="experience : ${resume.experienceList}">
+                        <div th:each="entry : ${resume.experienceEntries}">
                             <section class="mb-2 border-b-2 border-gray-300 break-inside-avoid">
                                 <header>
-                                    <h3 class="font-semibold text-gray-800 text-md leading-snugish" th:text="${experience.jobTitle}">Job Title</h3>
+                                    <h3 class="font-semibold text-gray-800 text-md leading-snugish" th:text="${entry.jobTitle}">Job Title</h3>
                                     <p class="text-m text-gray-500 leading-snugish">
-                                        <span th:text="${experience.startDate}">Start Date</span> &ndash;
-                                        <span th:text="${experience.endDate}">End Date</span> |
-                                        <span th:text="${experience.company}">Company</span>
+                                        <span th:text="${entry.startDate}">Start Date</span> &ndash;
+                                        <span th:text="${entry.endDate}">End Date</span> |
+                                        <span th:text="${entry.company}">Company</span>
                                     </p>
                                 </header>
-                                <ul class="pl-3 mt-2 font-normal text-gray-700 text-md leading-snugish">
-                                    <li th:each="responsibility : ${experience.responsibilities}">
+                                <!-- Display description if it exists -->
+                                <p th:if="${entry.description != null and not #strings.isEmpty(entry.description)}"
+                                   th:text="${entry.description}"
+                                   class="mt-2 text-gray-700 text-md">Description</p>
+                                <!-- Display responsibilities if they exist -->
+                                <ul th:if="${entry.responsibilities != null and not #lists.isEmpty(entry.responsibilities)}"
+                                    class="pl-3 mt-2 font-normal text-gray-700 text-md leading-snugish">
+                                    <li th:each="responsibility : ${entry.responsibilities}">
                                         <span class="text-gray-500 transform -translate-y-px select-none">›</span>
                                         <span th:text="${responsibility}">Responsibility</span>
                                     </li>
