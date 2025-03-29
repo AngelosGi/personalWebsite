@@ -24,19 +24,30 @@ public class SecurityConfiguration {
         this.myUserDetailsService = myUserDetailsService;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean 
+    public SecurityFilterChain swaggerSecurity(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity; need to enable in production
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.GET, "/**").permitAll() //  public access to all GET
-                        .requestMatchers(HttpMethod.POST, "/**").authenticated() // Restrict POST
-                        .requestMatchers(HttpMethod.PUT, "/**").authenticated() // Restrict PUT
-                        .requestMatchers(HttpMethod.DELETE, "/**").authenticated() // Restrict DELETE
-                        .anyRequest().authenticated() // Restrict other requests
-                )
-                .httpBasic(Customizer.withDefaults()); // Enable basic authentication
+            .securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
+            .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
+            .csrf(csrf -> csrf.disable())
+            .securityContext(securityContext -> securityContext.disable())
+            .sessionManagement(session -> session.disable());
 
+        return http.build();
+    }
+
+    @Bean
+    public SecurityFilterChain appSecurity(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/api/**").authenticated()
+                .anyRequest().denyAll()
+            )
+            .httpBasic(Customizer.withDefaults())
+            .csrf(csrf -> csrf.disable()); 
         return http.build();
     }
 
