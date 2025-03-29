@@ -1,7 +1,9 @@
 package io.anggi.personalwebsite.dto;
-
-import lombok.Data;
+import io.anggi.personalwebsite.model.EducationEmbeddable;
+import io.anggi.personalwebsite.model.ExperienceEmbeddable;
 import java.util.List;
+import java.util.ArrayList;
+import lombok.Data;
 
 @Data
 public class ResumeDTO {
@@ -15,6 +17,8 @@ public class ResumeDTO {
     private String email;
     private String phone;
     private String summary;
-    private List<EducationDTO> educations;
-    private List<ExperienceDTO> experiences;
+
+    private List<EducationEmbeddable> educationEntries = new ArrayList<>();
+    private List<ExperienceEmbeddable> experienceEntries = new ArrayList<>();
+    private List<String> skills = new ArrayList<>();
 }
