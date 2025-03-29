@@ -43,7 +43,7 @@
         <section class="mt-4">
             <h2 class="mb-2 text-xl font-semibold text-red-700">Message: <span th:text="${errorMessage}"></span></h2>
             <p class="text-md text-gray-700">Timestamp: <span
-                    th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                th:text="${#temporals.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
             <p class="text-md text-gray-700">Details: <span th:text="${details}"></span></p>
         </section>
 
