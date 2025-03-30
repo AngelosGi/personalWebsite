@@ -2,8 +2,11 @@
 
 name: Feature Branch CI & Auto-Merge
 
-# Run name for easy identification
 run-name: CI for ${{ github.ref_name }} by @${{ github.actor }}
+
+# Grant write permission to contents for the GITHUB_TOKEN
+permissions:
+  contents: write # Needed for git push in the auto-merge job
 
 on:
   # Triggers the workflow on push events ONLY for branches matching these patterns
@@ -54,8 +57,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Use a PAT here if develop is protected and GITHUB_TOKEN lacks permissions
-          # token: ${{ secrets.AUTO_MERGE_PAT }} # Add later if needed
+          # No PAT needed here now, default token will have permissions from the 'permissions:' block above
+          # token: ${{ secrets.AUTO_MERGE_PAT }} # Ensure this is removed or commented out
 
       - name: Set up Git user
         run: |
@@ -78,4 +81,5 @@ jobs:
           git merge --no-ff "$CURRENT_BRANCH" -m "Auto-merge branch '$CURRENT_BRANCH' after successful CI"
 
           echo "Pushing updated develop branch..."
+          # This push should now succeed using the default GITHUB_TOKEN with elevated permissions
           git push origin develop
