@@ -37,9 +37,10 @@ This project is a Spring Boot-based app for managing a personal resume website. 
 - **Lombok**: For reducing boilerplate code with annotations.
 - **Thymeleaf**: Template engine for rendering web pages.
 - **Swagger UI**: For interactive API documentation.
-- **Docker**: For containerizing PostgreSQL.
+- **Docker**: For containerizing PostgreSQL (local dev) and the application itself.
+- **Docker Compose**: For orchestrating local development environment.
 - **Spring Security**: For securing API endpoints and managing user authentication.
-- **Continuous integration and continuous delivery CI/CD**
+- **GitHub Actions**: For Continuous Integration (CI) and Docker image building/pushing.
 
 ---
 
@@ -52,9 +53,13 @@ This project is a Spring Boot-based app for managing a personal resume website. 
 
 ---
 
-## Installation
+## Installation & Local Development
 
-To run the Personal Resume Website API locally, follow these steps:
+There are two main ways to run the application locally:
+
+**1. Running Directly with Maven (Requires Local PostgreSQL):**
+
+Follow these steps if you have PostgreSQL installed and running directly on your machine:
 
 1. Clone the repository:
    ```bash
@@ -72,7 +77,7 @@ To run the Personal Resume Website API locally, follow these steps:
    - Ensure a PostgreSQL database is set up and running.
    - Update the database connection details in `application.properties`.
    - Run the application to create the initial database schema.
-   - **Note:** To use authenticated endpoints (POST/PUT/DELETE), you must first create a user in the `app_user` table with a BCrypt-hashed password (see `PasswordEncoderGenerator.java` for hashing).
+   - **Note:** To use authenticated endpoints (POST/PUT/DELETE), you must first create a user in the `app_user` table with a BCrypt-hashed password (see `PasswordEncoderGenerator.java` for hashing). You might need to connect to your local DB instance to do this.
 
 4. Start the Spring Boot application:
    ```bash
@@ -82,6 +87,35 @@ To run the Personal Resume Website API locally, follow these steps:
 
 5. Access the API at `http://localhost:8080/api/...` in your browser or API client.
 6. Access the resume template at `http://localhost:8080/resume/{id}`.
+
+**2. Running with Docker Compose (Recommended for Isolated Environment):**
+
+This method uses Docker Compose to run both the application (using the image from Docker Hub) and a PostgreSQL database in containers.
+
+1.  **Prerequisites**: Ensure Docker and Docker Compose are installed.
+2.  **Clone Repository**: Clone the project if you haven't already.
+3.  **Create `.env` file**: In the project root, create a `.env` file based on the example below. This file stores credentials and configuration. **Add this file to your `.gitignore`!**
+    ```dotenv
+    # .env file content (Example - ADD TO .gitignore)
+    POSTGRES_USER=
+    POSTGRES_PASSWORD= # Use a secure password locally too
+    POSTGRES_DB=postgres
+    DB_SERVICE_NAME=db
+    DB_PORT=5432
+    DOCKERHUB_USERNAME=anggian # Your Docker Hub username
+    ```
+4.  **Create `init.sql` (Optional but Recommended)**: edit the `init.sql` file in the project root to automatically create the initial user when the database container starts. generate a password with the `PasswordEncoderGenerator.java` and paste it in the `init.sql`
+5.  **Run Docker Compose**: Open a terminal in the project root and run:
+    ```bash
+    docker-compose up -d
+    ```
+    This will pull the necessary images (PostgreSQL and your application image from Docker Hub), create a network, start the containers, and run the `init.sql` script.
+6.  **Access Application**: Wait a moment for the containers to start, then access the application at `http://localhost:8080`.
+7.  **Stop Services**: When finished, stop and remove the containers:
+    ```bash
+    docker-compose down
+    ```
+    To also remove the database data volume, use `docker-compose down -v`.
 
 ## Usage
 
@@ -106,9 +140,29 @@ The API provides the following endpoints under the `/api` base path:
 ### To-Do
 
 - ~~Auth~~ Done
-- ~~hide db credentials for production. 👀~~ Done (add env variables)
-- ~~add skills from db~~ Done
-- Dockerize app & deploy (or something)
+- ~~Auth~~ Done
+- ~~Hide db credentials for production.~~ Done (using environment variables)
+- ~~Add skills from db~~ Done
+- ~~Dockerize app~~ Done (Dockerfile created)
+- ~~CI Pipeline (Build/Test/Auto-Merge)~~ Done (GitHub Actions)
+- ~~CI Pipeline (Docker Build/Push to Docker Hub)~~ Done (GitHub Actions)
+- Deploy to Cloud (e.g., Azure App Service)
 - Add more resume templates
+
+---
+
+## CI/CD Pipeline (GitHub Actions)
+
+This project uses GitHub Actions (`.github/workflows/ci-cd.yml`) for Continuous Integration:
+
+1.  **Triggers**:
+    *   On pushes to `feature/*` or `fix/*` branches.
+    *   On pushes to the `master` branch.
+    *   Manual trigger (`workflow_dispatch`).
+2.  **Jobs**:
+    *   **`build`**: Compiles the Java code and packages the application (`mvn clean package -DskipTests`). Uploads the JAR as an artifact.
+    *   **`test`**: Runs the unit tests (`mvn test`). Depends on `build`.
+    *   **`auto_merge_to_develop`**: If triggered by a `feature/*` or `fix/*` push and `test` succeeds, automatically merges the branch into `develop`.
+    *   **`docker_build_push`**: If triggered by a `master` push and `test` succeeds, builds a Docker image using the project `Dockerfile` and pushes it to Docker Hub (`anggian/personal-website`) tagged with `latest` and the short commit SHA. Requires `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` secrets in the GitHub repository settings.
 
 ---
