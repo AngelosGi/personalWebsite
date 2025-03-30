@@ -33,8 +33,8 @@
 <body>
 <main class="font-jost hyphens-manual">
     <!-- Page -------------------------------------------------------------------------------------------------------->
-    <section class="p-3 my-auto mx-auto max-w-3xl bg-gray-100 rounded-2xl border-4 border-gray-700 sm:p-9 md:p-16 lg:mt-6 print:border-0 page print:max-w-letter print:max-h-letter print:mx-0 print:my-o xsm:p-8 print:bg-white md:max-w-letter md:h-letter lg:h-letter">
-        <!-- Name ---------------------------------------------------------------------------------------------------->
+    <section class="p-3 my-auto mx-auto max-w-3xl bg-gray-100 rounded-2xl border-4 border-gray-700 sm:p-9 md:p-12 lg:mt-6 print:border-0 page print:max-w-letter print:max-h-letter print:mx-0 print:my-o xsm:p-8 print:bg-white md:max-w-letter">
+    <!-- Name ---------------------------------------------------------------------------------------------------->
         <header class="inline-flex justify-between items-baseline mb-2 w-full align-top border-b-4 border-gray-300">
             <section class="block">
                 <h1 class="mb-0 text-5xl font-bold text-gray-700" th:text="${resume.name}">resume.name</h1>
@@ -45,12 +45,19 @@
             </section>
             <!--   Initials Block         -->
             <section class="justify-between px-3 mt-0 mb-5 text-4xl font-black leading-none text-white bg-gray-700 initials-container print:bg-black" style="padding-bottom: 1.5rem; padding-top: 1.5rem;">
-                <section class="text-center initial animate-pulse"><a href="https://anggi.io/swagger-ui/index.html" style="color: inherit; text-decoration: none;">A</a></section>
+              
+                <section class="text-center initial animate-pulse pb-2">
+                    <a href="https://anggi.io/swagger-ui/index.html" style="color: rgb(103, 156, 103); text-decoration: none;">
+                      &#129425;&#65038; <!-- 🦑 + Variation Selector -->
+                    </a>
+                  </section>
+                <section class="text-center initial">A</section>
                 <section class="text-center initial">N</section>
                 <section class="text-center initial">G</section>
-                <section class="text-center initial">-</section>
                 <section class="text-center initial">G</section>
                 <section class="text-center initial">I</section>
+
+
             </section>
         </header>
 
@@ -108,7 +115,7 @@
                     </section>
                 </section>
                 <!--Education -------------------------------------------------------------------------------------------------------->
-                <section class="pb-0 mt-2 border-b-4 border-gray-300 first:mt-0 break-inside-avoid">
+                <section class="pb-0 mt-3 border-b-4 border-gray-300 first:mt-0 break-inside-avoid">
                     <!-- To keep in the same column -->
                     <section class="break-inside-avoid">
                         <h2 class="mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal">EDUCATION</h2>
@@ -153,8 +160,8 @@
                                         th:text="${skill}"
                                         class="p-1.5 mb-1 leading-relaxed text-white bg-gray-800 mr-1.6 print:bg-white print:border-inset">
                                         Skill Placeholder
-                                    </li>
-                                </ul>
+                                    </li> <span class="">...and more</span>
+                                </ul> 
                             </section>
                         </section>
                     </section>
