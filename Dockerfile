@@ -31,4 +31,4 @@ COPY --from=build /app/target/*.jar ${JAR_DEST_PATH}
 EXPOSE 8080
 
 # Run the Spring Boot application using the fixed destination path
-ENTRYPOINT ["java","-jar", "${JAR_DEST_PATH}"]
+ENTRYPOINT ["java","-jar", "/app/app.jar"]
