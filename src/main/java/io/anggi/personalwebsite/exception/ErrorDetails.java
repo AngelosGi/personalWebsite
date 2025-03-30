@@ -2,13 +2,12 @@ package io.anggi.personalwebsite.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Date;
+import java.time.LocalDateTime; 
 
 @Data
 @AllArgsConstructor
 public class ErrorDetails {
-    private Date timestamp;
+    private LocalDateTime timestamp; 
     private String message;
     private String details;
 }

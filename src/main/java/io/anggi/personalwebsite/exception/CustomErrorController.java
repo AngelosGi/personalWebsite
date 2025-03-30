@@ -2,31 +2,47 @@ package io.anggi.personalwebsite.exception;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.context.request.ServletWebRequest; 
 
-import java.util.Date;
-
+import java.time.LocalDateTime; 
 @Controller
 public class CustomErrorController implements ErrorController {
 
-    @RequestMapping("error")
-    public String handle404Error(Model model, HttpServletRequest request, HttpServletResponse response, WebRequest webRequest) {
-        Integer status = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), "Page Not found :(", webRequest.getDescription(true));
+    @RequestMapping("/error") 
+    public String handleError(HttpServletRequest request, Model model) {
+        Object statusObj = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Integer statusCode = (statusObj instanceof Integer) ? (Integer) statusObj : null;
+        HttpStatus status = (statusCode != null) ? HttpStatus.resolve(statusCode) : HttpStatus.INTERNAL_SERVER_ERROR;
+        if (status == null) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR; // Handle unknown status codes
+        }
 
-        model.addAttribute("status", HttpStatus.NOT_FOUND.value());
+        String errorMessage;
+        Object exception = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        if (exception instanceof Throwable) {
+            errorMessage = status.getReasonPhrase(); 
+        } else {
+            Object messageAttr = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+            errorMessage = (messageAttr instanceof String && !((String) messageAttr).isEmpty()) ? (String) messageAttr : status.getReasonPhrase();
+        }
+
+        // Use ServletWebRequest for description if needed, false for less detail
+        ServletWebRequest webRequest = new ServletWebRequest(request);
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), errorMessage, webRequest.getDescription(false));
+
+        model.addAttribute("status", status.value());
+        model.addAttribute("error", status.getReasonPhrase()); // Add reason phrase
         model.addAttribute("errorMessage", errorDetails.getMessage());
-        model.addAttribute("timestamp", errorDetails.getTimestamp() );
-        model.addAttribute("details", errorDetails.getDetails());
+        model.addAttribute("timestamp", errorDetails.getTimestamp());
+        model.addAttribute("details", errorDetails.getDetails()); // Optional
 
-        response.setStatus(status);
-        return "error";
+        return "error"; // Render the error template
     }
+
+
 }

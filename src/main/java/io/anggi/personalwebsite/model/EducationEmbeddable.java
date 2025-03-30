@@ -1,18 +1,13 @@
 package io.anggi.personalwebsite.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
+@Embeddable 
 @Data
 @NoArgsConstructor
-public class Education {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EducationEmbeddable {
 
     private String degree;
     private String institution;
@@ -22,8 +17,4 @@ public class Education {
     private String minor;
     private double gpa;
 
-    @ManyToOne
-    @JoinColumn(name = "resume_id")
-    @ToString.Exclude
-    private Resume resume;
 }
