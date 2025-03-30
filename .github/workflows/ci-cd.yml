@@ -73,9 +73,6 @@ jobs:
           echo "Checking out develop branch..."
           git checkout develop
 
-          echo "Pulling latest changes for develop..."
-          git pull origin develop
-
           echo "Merging branch '$CURRENT_BRANCH' into develop..."
           # Use --no-ff to create a merge commit, preserving history
           git merge --no-ff "$CURRENT_BRANCH" -m "Auto-merge branch '$CURRENT_BRANCH' after successful CI"

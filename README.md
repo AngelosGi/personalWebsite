@@ -30,7 +30,7 @@ This project is a Spring Boot-based app for managing a personal resume website. 
 
 ---
 
-## Technologies Used
+## Technologies Used.
 
 - **Spring Boot**: For building API endpoints and handling requests/responses.
 - **PostgreSQL**: Relational database for managing resume data.
