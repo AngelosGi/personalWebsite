@@ -1,0 +1,85 @@
+# .github/workflows/ci-cd.yml
+
+name: Feature Branch CI & Auto-Merge
+
+run-name: CI for ${{ github.ref_name }} by @${{ github.actor }}
+
+# Grant write permission to contents for the GITHUB_TOKEN
+permissions:
+  contents: write # Needed for git push in the auto-merge job
+
+on:
+  # Triggers the workflow on push events ONLY for branches matching these patterns
+  push:
+    branches:
+      - 'feature/**' # Matches feature/ or feature/something/else
+      - 'fix/**'     # Matches fix/ or fix/something/else
+
+  # Allows you to run this workflow manually from the Actions tab (optional)
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Grant execute permission for mvnw
+        run: chmod +x mvnw
+
+      # We use 'install' here which includes compile, test, and package phases
+      - name: Build and Test with Maven
+        run: ./mvnw clean install
+
+      - name: Upload Unit Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports-${{ github.run_id }}
+          path: target/surefire-reports/
+
+  # Auto-merge to develop if build_and_test succeeds
+  auto_merge_to_develop:
+    runs-on: ubuntu-latest
+    # Only run if the previous job succeeded
+    needs: build_and_test
+
+    steps:
+      - name: Checkout Code with Full History
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # No PAT needed here now, default token will have permissions from the 'permissions:' block above
+          # token: ${{ secrets.AUTO_MERGE_PAT }} # Ensure this is removed or commented out
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions-bot@users.noreply.github.com"
+
+      - name: Merge feature/fix branch into develop
+        run: |
+          # Get the name of the branch that triggered the workflow
+          CURRENT_BRANCH="${{ github.ref_name }}"
+
+          echo "Checking out develop branch..."
+          git checkout develop
+
+          echo "Pulling latest changes for develop..."
+          git pull origin develop
+
+          echo "Merging branch '$CURRENT_BRANCH' into develop..."
+          # Use --no-ff to create a merge commit, preserving history
+          git merge --no-ff "$CURRENT_BRANCH" -m "Auto-merge branch '$CURRENT_BRANCH' after successful CI"
+
+          echo "Pushing updated develop branch..."
+          # This push should now succeed using the default GITHUB_TOKEN with elevated permissions
+          git push origin develop
