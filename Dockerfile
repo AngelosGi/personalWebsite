@@ -5,16 +5,20 @@ FROM maven:3.9.8-eclipse-temurin-21 AS build
 COPY . /app
 
 # Package the application using Maven
-RUN mvn -f /app/pom.xml clean package -DskipTests
+# Use a fixed artifact name during build for easier copying later
+RUN mvn -f /app/pom.xml clean package -DskipTests -DfinalName=app
 
 # Second stage: Run the application
 FROM eclipse-temurin:21-jdk
 
-# Copy the packaged application from the build stage
-COPY --from=build /app/target/personal-website-0.0.1-SNAPSHOT.jar /app/personal-website-0.0.1-SNAPSHOT.jar
+# Define argument for the JAR file path
+ARG JAR_FILE=/app/app.jar
+
+# Copy the packaged application from the build stage using the fixed name
+COPY --from=build /app/target/app.jar ${JAR_FILE}
 
 # Expose the port the application runs on
 EXPOSE 8080
 
-# Run the Spring Boot application
-ENTRYPOINT ["java","-jar","/app/personal-website-0.0.1-SNAPSHOT.jar"]
+# Run the Spring Boot application using the argument
+ENTRYPOINT ["java","-jar", "${JAR_FILE}"]
