@@ -1,16 +1,18 @@
 # .github/workflows/ci-cd.yml
 
-name: Java CI/CD Pipeline
+name: Feature Branch CI & Auto-Merge
+
+# Run name for easy identification
+run-name: CI for ${{ github.ref_name }} by @${{ github.actor }}
 
 on:
-  # Trigger on pushes to master (for deployment)
+  # Triggers the workflow on push events ONLY for branches matching these patterns
   push:
-    branches: [ master ]
-  # Trigger on PRs targeting develop (for testing and auto-merge)
-  pull_request:
-    branches: [ develop ]
-    types: [ opened, synchronize, reopened ] # Trigger on PR open, update, reopen
+    branches:
+      - 'feature/**' # Matches feature/ or feature/something/else
+      - 'fix/**'     # Matches fix/ or fix/something/else
 
+  # Allows you to run this workflow manually from the Actions tab (optional)
   workflow_dispatch:
 
 jobs:
@@ -30,6 +32,7 @@ jobs:
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw
 
+      # We use 'install' here which includes compile, test, and package phases
       - name: Build and Test with Maven
         run: ./mvnw clean install
 
@@ -40,31 +43,29 @@ jobs:
           name: unit-test-reports-${{ github.run_id }}
           path: target/surefire-reports/
 
-  # New Job: Auto-merge to develop after successful PR build/test
+  # Auto-merge to develop if build_and_test succeeds
   auto_merge_to_develop:
     runs-on: ubuntu-latest
-    # Only run this job if the event is a pull_request and build_and_test succeeded
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == false
-    needs: build_and_test # Depends on the build_and_test job
+    # Only run if the previous job succeeded
+    needs: build_and_test
 
     steps:
       - name: Checkout Code with Full History
         uses: actions/checkout@v4
         with:
-          # We need the full history to merge correctly
           fetch-depth: 0
           # Use a PAT here if develop is protected and GITHUB_TOKEN lacks permissions
-          # token: ${{ secrets.AUTO_MERGE_PAT }} # We will add this later if needed
+          # token: ${{ secrets.AUTO_MERGE_PAT }} # Add later if needed
 
       - name: Set up Git user
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions-bot@users.noreply.github.com"
 
-      - name: Merge PR branch into develop
+      - name: Merge feature/fix branch into develop
         run: |
-          # Get the name of the branch being merged (the head branch of the PR)
-          PR_BRANCH="${{ github.head_ref }}"
+          # Get the name of the branch that triggered the workflow
+          CURRENT_BRANCH="${{ github.ref_name }}"
 
           echo "Checking out develop branch..."
           git checkout develop
@@ -72,9 +73,9 @@ jobs:
           echo "Pulling latest changes for develop..."
           git pull origin develop
 
-          echo "Merging branch '$PR_BRANCH' into develop..."
+          echo "Merging branch '$CURRENT_BRANCH' into develop..."
           # Use --no-ff to create a merge commit, preserving history
-          git merge --no-ff "$PR_BRANCH" -m "Merge pull request #${{ github.event.number }} from $PR_BRANCH"
+          git merge --no-ff "$CURRENT_BRANCH" -m "Auto-merge branch '$CURRENT_BRANCH' after successful CI"
 
           echo "Pushing updated develop branch..."
           git push origin develop
