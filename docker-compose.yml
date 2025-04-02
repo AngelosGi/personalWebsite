@@ -1,0 +1,38 @@
+
+services:
+  db:
+    image: postgres:latest
+    container_name: personal-website-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # Optional: Map port if you need to connect directly from your host machine
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Mount SQL initialization script (see Step 4 below)
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+  app:
+    image: ${DOCKERHUB_USERNAME}/personal-website:latest # Uses username from .env
+    container_name: personal-website-app
+    depends_on:
+      db:
+        condition: service_healthy # Wait for db healthcheck to pass
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://${DB_SERVICE_NAME}:${DB_PORT}/${POSTGRES_DB} # Uses vars from .env
+      DB_USERNAME: ${POSTGRES_USER} # Uses var from .env
+      DB_PASSWORD: ${POSTGRES_PASSWORD} # Uses var from .env
+      # Add any other environment variables your app needs
+
+volumes:
+  postgres_data:

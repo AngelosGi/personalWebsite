@@ -1,24 +1,34 @@
 # First stage: Build the application
 FROM maven:3.9.8-eclipse-temurin-21 AS build
 
-# Copy the project files into the container
-COPY . /app
+# Set working directory
+WORKDIR /app
 
-# Package the application using Maven
-# Use a fixed artifact name during build for easier copying later
-RUN mvn -f /app/pom.xml clean package -DskipTests -DfinalName=app
+# Copy pom.xml first to leverage Docker cache for dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy the rest of the project files
+COPY src ./src
+
+# Package the application using Maven (without -DfinalName)
+RUN mvn clean package -DskipTests
 
 # Second stage: Run the application
 FROM eclipse-temurin:21-jdk
 
-# Define argument for the JAR file path
-ARG JAR_FILE=/app/app.jar
+# Set working directory
+WORKDIR /app
 
-# Copy the packaged application from the build stage using the fixed name
-COPY --from=build /app/target/app.jar ${JAR_FILE}
+# Define a fixed path for the app JAR in the final image
+ARG JAR_DEST_PATH=app.jar
+
+# Copy the JAR using a wildcard from the build stage's target directory
+# Assumes only one JAR is built by the package phase
+COPY --from=build /app/target/*.jar ${JAR_DEST_PATH}
 
 # Expose the port the application runs on
 EXPOSE 8080
 
-# Run the Spring Boot application using the argument
-ENTRYPOINT ["java","-jar", "${JAR_FILE}"]
+# Run the Spring Boot application using the fixed destination path
+ENTRYPOINT ["java","-jar", "/app/app.jar"]

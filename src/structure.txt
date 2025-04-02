@@ -54,14 +54,14 @@ JSON Resume Schema
 
 {
   "name": "Angelos Giannopoulos",
-  "jobTitle": "Building functional APIs and cloud projects while methodically learning DevOps - transitioned from hands-on tech support roles",
+  "jobTitle": "Full-Stack Developer | Cloud & DevOps",
   "location": "Thessaloniki, GR",
   "portfolioUrl": "http://anggi.io/",
   "linkedinUrl": "https://www.linkedin.com/in/anggian/",
   "githubUrl": "https://github.com/AngelosGi",
   "email": "giannopoulos.ang@gmail.com",
   "phone": "+30 6955151477",
-  "summary": "Developer with hands-on experience across full-stack projects and cloud technologies (Docker, AWS, Terraform), continuously expanding skills through practical application. Proficient in building Spring Boot and FastAPI solutions, with working implementations of CI/CD pipelines and containerized deployments. Certified in Multi-Cloud DevOps with applied experience from personal projects. Transitioned from technical support roles by systematically learning modern development practices - successfully adapting infrastructure management skills to implement Kubernetes clusters and automated testing frameworks. Comfortable exploring new technologies while valuing core engineering principles, as demonstrated by evolving from resolving system-level issues to developing maintainable APIs.",
+  "summary": "Full-Stack Developer with hands-on experience in Spring Boot, FastAPI, and cloud technologies (AWS, Docker, Terraform). Skilled in CI/CD pipelines, containerized deployments, and Kubernetes, with a Multi-Cloud DevOps certification. Transitioned from technical support to development by mastering modern practices, applying infrastructure expertise to automated testing and scalable API development. Passionate about learning new tech while prioritizing maintainable, principled engineering.",
   "educationEntries": [
     {
       "degree": "Certificate",
@@ -70,7 +70,7 @@ JSON Resume Schema
       "endDate": "March 2025",
       "major": "Multi-Cloud DevOps Engineer",
       "minor": null,
-      "gpa": 0.0
+      "gpa": 0
     },
     {
       "degree": "Certificate",
@@ -79,7 +79,7 @@ JSON Resume Schema
       "endDate": "Dec 2024",
       "major": "Talent Accelerator: Cloud Engineering",
       "minor": null,
-      "gpa": 0.0
+      "gpa": 0
     },
     {
       "degree": "Certificate",
@@ -88,7 +88,7 @@ JSON Resume Schema
       "endDate": "Sept 2024",
       "major": "Professional in Python Programming",
       "minor": null,
-      "gpa": 0.0
+      "gpa": 0
     },
     {
       "degree": "Diploma",
@@ -97,7 +97,7 @@ JSON Resume Schema
       "endDate": "Sept 2024",
       "major": "Information Technology",
       "minor": null,
-      "gpa": 0.0
+      "gpa": 0
     }
   ],
   "experienceEntries": [
@@ -157,20 +157,37 @@ JSON Resume Schema
     }
   ],
   "skills": [
-    "Java",
-    "Spring",
-    "Python",
-    "FastAPI",
-    "MVC",
-    "REST APIs",
-    "Swagger UI",
+    "Java/Spring",
+    "Python/FastAPI",
+    "SQL",
     "Hibernate",
-    "Postgresql",
-    "mySQL",
-    "Linux",
+    "REST APIs",
+    "MVC",
     "Docker",
+    "Linux",
+    "Git/GitHub Actions",
     "HTML5",
-    "CSS-Tailwind"
+    "CSS-Tailwind",
+    "Swagger UI",
+    "Terraform",
+    "Kubernetes",
+    "Azure",
+    "AWS",
+    "CI/CD",
+    "Jenkins",
+    "Apache Solr",
+    "Elastic Stack",
+    "Pydantic",
+    "PHP/Laravel",
+    "Thymeleaf",
+    "JUnit",
+    "Mockito",
+    "Rest-Assured",
+    "Maven",
+    "Bash Scripting",
+    "ORM Management",
+    "Microservices",
+    "Distributed Systems"
   ]
 }
 
