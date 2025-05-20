@@ -13,12 +13,6 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -29,7 +23,22 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+
+
 ### VS Code ###
 .vscode/
 /src/main/java/io/anggi/personalwebsite/controller/HelloController.java
 src/main/resources/application.properties
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+
