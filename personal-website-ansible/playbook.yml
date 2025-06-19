@@ -11,4 +11,4 @@
     - role: docker_setup
     - role: app_deployment
     - role: nginx_setup
-#    - role: certbot_setup
+    - role: certbot_setup

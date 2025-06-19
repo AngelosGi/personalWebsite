@@ -29,6 +29,7 @@ services:
       DB_URL: jdbc:postgresql://{{ db_service_name }}:{{ db_port }}/{{ postgres_db_name }}
       DB_USERNAME: "{{ postgres_user }}"
       DB_PASSWORD: "{{ postgres_password }}"
-
+      APP_INITIAL_USER_USERNAME: "{{ app_initial_user }}"
+      APP_INITIAL_USER_PASSWORD: "{{ app_initial_password }}"
 volumes:
   postgres_data:
