@@ -22,6 +22,7 @@ services:
 
   app:
     image: ${DOCKERHUB_USERNAME}/personal-website:latest # Uses username from .env
+    # build: . # Uncomment if you want to build the image from Dockerfile
     container_name: personal-website-app
     depends_on:
       db:
@@ -32,7 +33,8 @@ services:
       DB_URL: jdbc:postgresql://${DB_SERVICE_NAME}:${DB_PORT}/${POSTGRES_DB} # Uses vars from .env
       DB_USERNAME: ${POSTGRES_USER} # Uses var from .env
       DB_PASSWORD: ${POSTGRES_PASSWORD} # Uses var from .env
-      # Add any other environment variables your app needs
+      APP_INITIAL_USER_USERNAME: ${APP_INITIAL_USER_USERNAME}
+      APP_INITIAL_USER_PASSWORD: ${APP_INITIAL_USER_PASSWORD}
 
 volumes:
   postgres_data:
