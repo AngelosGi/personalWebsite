@@ -1,4 +1,7 @@
 # inventory
 
 [webservers]
-91.99.128.182 ansible_user=anggi ansible_python_interpreter=/usr/bin/python3
+YOUR-VPS-IP-HERE(take-it-from-terraform-apply-output) ansible_user=YOUR-USER-HERE ansible_python_interpreter=/usr/bin/python3
+
+#example:
+# 92.123.456.789 ansible_user=anggi ansible_python_interpreter=/usr/bin/python3
