@@ -29,7 +29,8 @@ build/
 terraform.tfstate
 terraform.tfstate.backup
 
-
+# Ansible temporary files
+*.retry
 
 ### VS Code ###
 .vscode/

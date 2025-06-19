@@ -1,0 +1,34 @@
+#cloud-config
+# This script is executed on the first boot of the server
+
+# 1. Update package lists and upgrade installed packages
+package_update: true
+package_upgrade: true
+
+# 2. Install necessary packages for Ansible
+packages:
+  - python3
+  - python3-pip
+  - ufw
+  - git
+
+# 3. Create the 'anggi' user for Ansible to connect with
+users:
+  - name: anggi
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, sudo
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8qLY5uRTqdXnll+9CIRZPAl9Com3ISD9IKNp6m1KIEUWJ4IrDB+i2IFYJunnyZxMtaiTOLvl5ydwePBswESWCLOec3YshWLC1wg1qZFMLePcuJsSkrPHtSC6rPZp/o+EF5t4qPILBse6iypbjJRBSxqkikN3FAq7r6t7ps1uhQjObIOWBPh4yaY3NPU0OIw3fAX2hwD3jgYWucPqqbpdd5ubE7q7nzWjTfeM02hKJZQNUVErwQZyEXrhWimC8vtfZzdeRIdWU01QkzjbihawVfqaZlWfMp3lPKAKHuvbmXj3o7LH13NJf2Dnu+OvBs/0oBbEhKTJVkdeOOCMwLH1WVuqi4iTvEfxslA1nkyMePbs3hII8hoeRdU3WmctEag73loo42VLRjeZ7mEqiiZwD6dhyebVAZTgUJDHrpLzDxhka2OOHL9lMOQ6J3RyANqI9832jxFjazknJG/+oGt8z1K2ehbNQJ4rRKJj7W3z1TQi5t8yWl5aj3/sUXD9uYZF9QtEoftFmR+XWOuhALmdY+EkJmxqBbKrPYH50jvxua/WZuBM7K9vcJwtd8Fw8bRswt/y7JGtqZVtzCDKmV2gM6BX0ipHSavilv13mabq21HHnHkUUh3SlD490xcDQRzDwSuoJyJ4sxA7YDypfvFL5wi7GYADVfxLcTXPDS8OQEQ== aggelos.gian.sn@gmail.com
+
+# 4. Run final setup commands
+runcmd:
+  # Enable UFW firewall and set basic rules
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow ssh
+  - ufw --force enable
+
+  # Ensure ssh service is running
+  - systemctl enable ssh
+  - systemctl start ssh
