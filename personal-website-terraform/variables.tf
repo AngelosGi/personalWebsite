@@ -1,7 +1,7 @@
 variable "hcloud_token" {
   description = "Hetzner Cloud API token."
   type        = string
-  sensitive   = true # So Terraform doesn't output it in logs
+  sensitive   = true 
 }
 
 variable "server_name" {
@@ -13,19 +13,19 @@ variable "server_name" {
 variable "server_type" {
   description = "Hetzner Cloud server type (e.g., cpx11, cx21)."
   type        = string
-  default     = "cpx11" # A good starting point
+  default     = "cpx11" 
 }
 
 variable "server_image" {
-  description = "Hetzner Cloud server image (e.g., ubuntu-22.04)."
+  description = "Hetzner Cloud server image."
   type        = string
   default     = "ubuntu-22.04"
 }
 
 variable "server_location" {
-  description = "Hetzner Cloud server location (e.g., nbg1, fsn1, hel1)."
+  description = "Hetzner Cloud server location."
   type        = string
-  default     = "nbg1" # Nuremberg
+  default     = "nbg1" 
 }
 
 variable "ssh_key_name" {
@@ -37,8 +37,8 @@ variable "ssh_key_name" {
 variable "ssh_public_key_path" {
   description = "Path to the public SSH key file to be uploaded to Hetzner for root access."
   type        = string
-  # Example: default = "~/.ssh/hetzner_rsa.pub"
-  # It's better to provide this at runtime or via a .tfvars file
+  # Example: default = "~/.ssh/your_key.pub"
+  # runtime or .tfvars or environment variable
 }
 
 variable "user_data_file" {
