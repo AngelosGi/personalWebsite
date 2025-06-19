@@ -1,0 +1,33 @@
+# roles/nginx_setup/tasks/main.yml
+---
+- name: Install Nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Template Nginx site configuration
+  ansible.builtin.template:
+    src: anggi.io.conf.j2
+    dest: "/etc/nginx/sites-available/{{ app_domain }}"
+  notify: Reload Nginx
+
+- name: Enable Nginx site
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ app_domain }}"
+    dest: "/etc/nginx/sites-enabled/{{ app_domain }}"
+    state: link
+    force: yes
+  notify: Reload Nginx
+
+- name: Disable the default Nginx site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Reload Nginx
+
+- name: Ensure Nginx service is started and enabled
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
