@@ -1,5 +1,10 @@
 # roles/common_base/tasks/main.yml
 ---
+- name: Wait for apt-lock to be released
+  ansible.builtin.shell: "while lsof /var/lib/dpkg/lock-frontend ; do sleep 10 ; done"
+  changed_when: false
+  become: true
+
 - name: Update apt cache and install security packages
   ansible.builtin.apt:
     name:
