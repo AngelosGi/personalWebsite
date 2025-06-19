@@ -23,10 +23,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# Terraform
+# Terraform state files
 .terraform/
-*.tfstate
-*.tfstate.backup
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
 
 
 
@@ -42,3 +43,4 @@ src/main/resources/application.properties
 *.ipr
 
 
+.env
