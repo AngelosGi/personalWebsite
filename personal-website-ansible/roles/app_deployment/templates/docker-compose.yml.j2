@@ -1,0 +1,34 @@
+# roles/app_deployment/templates/docker-compose.yml.j2
+services:
+  db:
+    image: postgres:latest
+    container_name: "{{ db_container_name }}"
+    restart: always
+    environment:
+      POSTGRES_DB: "{{ postgres_db_name }}"
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U {{ postgres_user }} -d {{ postgres_db_name }}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+  app:
+    image: "{{ app_docker_image }}"
+    container_name: "{{ app_container_name }}"
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://{{ db_service_name }}:{{ db_port }}/{{ postgres_db_name }}
+      DB_USERNAME: "{{ postgres_user }}"
+      DB_PASSWORD: "{{ postgres_password }}"
+
+volumes:
+  postgres_data:

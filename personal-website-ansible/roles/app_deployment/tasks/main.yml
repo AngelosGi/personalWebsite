@@ -1,0 +1,37 @@
+# roles/app_deployment/tasks/main.yml
+---
+- name: Ensure target directory for app exists
+  ansible.builtin.file:
+    path: "{{ app_path }}"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: '0755'
+
+- name: Template docker-compose.yml file to the server
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ app_path }}/docker-compose.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: '0644'
+
+- name: Template .env file from vault variables
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ app_path }}/.env"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: '0600'
+
+- name: Pull latest images from Docker Hub
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_path }}"
+    state: present
+    pull: always
+    services: [] # Ensure all services are considered for pulling
+
+- name: Run application services with docker-compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_path }}"
+    state: present # Ensures services are up and running

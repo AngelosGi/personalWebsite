@@ -1,0 +1,28 @@
+# group_vars/all/vars.yml
+---
+# System settings
+system_user: anggi
+ssh_port: 22
+
+# Application settings
+app_name: personalWebsite
+app_docker_image: "anggian/personal-website:latest" # <<< From your docker-compose.yml
+app_path: "/home/{{ system_user }}/{{ app_name }}"
+app_domain: "anggi.io"
+app_www_domain: "www.anggi.io"
+
+app_initial_user: "anggi" # swagger-ui username (pass in the ansible vault)
+
+# Database settings (non-sensitive parts)
+db_service_name: "db"
+db_port: 5432
+postgres_db_name: "postgres"
+postgres_user: "Anggi" # DB username (pass in the ansible vault)
+
+
+# Certbot settings
+certbot_email: "aggelos.gian.sn@gmail.com" 
+
+# Docker Compose settings
+db_container_name: "personal-website-db"
+app_container_name: "personal-website-app"

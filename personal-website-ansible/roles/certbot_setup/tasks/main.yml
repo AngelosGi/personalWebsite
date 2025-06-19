@@ -1,0 +1,25 @@
+# roles/certbot_setup/tasks/main.yml
+---
+- name: Install Certbot and its Nginx plugin
+  ansible.builtin.apt:
+    name: ['certbot', 'python3-certbot-nginx']
+    state: present
+    update_cache: yes
+
+- name: Obtain and install Let's Encrypt certificate
+  ansible.builtin.command: >
+    certbot --nginx --agree-tos --redirect
+    --email {{ certbot_email }}
+    -d {{ app_domain }}
+    -d {{ app_www_domain }}
+    --no-eff-email
+    --non-interactive
+  args:
+    creates: "/etc/letsencrypt/live/{{ app_domain }}/fullchain.pem"
+
+- name: Ensure Certbot auto-renewal timer is active
+  ansible.builtin.service:
+    name: certbot.timer
+    state: started
+    enabled: yes
+  when: ansible_facts['service_mgr'] == 'systemd'
