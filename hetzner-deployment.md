@@ -1,3 +1,181 @@
+
+
+## Step-by-Step Deployment Guide
+
+This guide provides a tutorial-style walkthrough for deploying the application from scratch, assuming you have just cloned the repository containing the `personal-website` application code, the `personal-website-terraform` directory, and the `personal-website-ansible` directory.
+
+### 1. Initial Setup & Prerequisites
+
+Before starting, ensure you have:
+
+*   A **Hetzner Cloud account** and an **API token**.
+*   A registered **domain name** (e.g., `anggi.io`).
+*   Your application's Docker image pushed to **Docker Hub** (e.g., `anggian/personal-website:latest`).
+*   **Terraform CLI** installed locally.
+*   **Ansible CLI** installed locally.
+*   An **SSH key pair** (e.g., `~/.ssh/hetzner_rsa` for the private key and `~/.ssh/hetzner_rsa.pub` for the public key).
+*   **Git** installed locally.
+
+### 2. Phase 1: Provision Infrastructure with Terraform
+
+This phase creates the server on Hetzner Cloud.
+
+**a. Navigate to the Terraform Directory**
+
+Open your terminal and change to the Terraform project directory:
+```bash
+cd /path/to/your/projects/personal-website-terraform
+```
+
+**b. Configure Secrets as Environment Variables**
+
+Set your Hetzner API token and the path to your public SSH key. These are used by Terraform to authenticate and set up the server.
+```bash
+export TF_VAR_hcloud_token="YOUR_HETZNER_API_TOKEN"
+export TF_VAR_ssh_public_key_path="~/.ssh/hetzner_rsa.pub"
+```
+*   Replace `YOUR_HETZNER_API_TOKEN` with your actual token.
+*   Replace `~/.ssh/hetzner_rsa.pub` with the correct path to your public SSH key.
+
+**c. Update `cloud-init.yaml` with Your Public SSH Key**
+
+Open the `personal-website-terraform/cloud-init.yaml` file. Find the `ssh_authorized_keys` section and replace the placeholder with the *entire content* of your public SSH key file (`~/.ssh/hetzner_rsa.pub`).
+```yaml
+    users:
+      - name: anggi
+        # ... other user settings ...
+        ssh_authorized_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC... your_email@example.com # Replace this line
+```
+
+**d. Initialize Terraform**
+
+This command downloads the necessary provider plugins. Run it once per project.
+```bash
+terraform init
+```
+
+**e. Plan the Infrastructure**
+
+This command shows you what Terraform will create or change. Review the output carefully.
+```bash
+terraform plan
+```
+You should see a plan to add 2 resources (an SSH key and a server).
+
+**f. Apply the Infrastructure Plan**
+
+This command creates the actual resources in your Hetzner Cloud account.
+```bash
+terraform apply
+```
+Type `yes` when prompted to confirm. This may take a few minutes.
+Upon completion, Terraform will output the server's name, IPv4 address, and IPv6 address. **Copy the IPv4 address** – you'll need it for Ansible.
+
+### 3. Phase 2: Configure Server with Ansible
+
+This phase configures the newly created server and deploys your application.
+
+**a. Navigate to the Ansible Directory**
+
+```bash
+cd /path/to/your/projects/personal-website-ansible
+```
+
+**b. Update the Inventory File**
+
+Open `personal-website-ansible/inventory`. Replace `YOUR_SERVER_IP_FROM_TERRAFORM` with the actual IPv4 address of your server (obtained from the `terraform apply` output). Also, ensure `ansible_user` matches the user created by `cloud-init` (default is `anggi`).
+```ini
+[webservers]
+91.99.197.234 ansible_user=anggi ansible_python_interpreter=/usr/bin/python3
+```
+
+**c. Configure Ansible (`ansible.cfg`)**
+
+Open `personal-website-ansible/ansible.cfg`. Ensure the `private_key_file` path points to your local **private** SSH key (e.g., `~/.ssh/hetzner_rsa`).
+```ini
+private_key_file  = ~/.ssh/hetzner_rsa
+```
+
+**d. Configure Variables (`group_vars/all/vars.yml`)**
+
+Open `personal-website-ansible/group_vars/all/vars.yml`. Review all variables and update them if necessary, especially:
+*   `app_docker_image`: Ensure this matches your image on Docker Hub.
+*   `app_domain` and `app_www_domain`: Set to your domain.
+*   `certbot_email`: Your email for Let's Encrypt SSL notifications.
+*   `app_initial_user`: The username for the initial application user (if your app creates one).
+
+**e. Configure Secrets (`group_vars/all/vault.yml`)**
+
+This file stores sensitive data like database passwords.
+*   If it's your first time, create it: `ansible-vault create group_vars/all/vault.yml`
+*   To edit it: `ansible-vault edit group_vars/all/vault.yml`
+Set a strong vault password when prompted. Inside the file, define your secrets:
+```yaml
+postgres_password: "YOUR_STRONG_DB_PASSWORD"
+app_initial_password: "YOUR_STRONG_APP_ADMIN_PASSWORD" # Password for app_initial_user
+```
+
+**f. Test Ansible Connection (Optional but Recommended)**
+
+Verify Ansible can connect to your new server:
+```bash
+ansible webservers -m ping
+```
+You should see a green "pong" success message. If not, troubleshoot SSH key paths, permissions (`chmod 600 ~/.ssh/hetzner_rsa`), or the IP address in the inventory.
+
+**g. Run the Ansible Playbook (Initial Deployment - HTTP Only)**
+
+For the first run, it's wise to deploy without SSL to test basic functionality.
+Open `personal-website-ansible/playbook.yml` and ensure the `certbot_setup` role is commented out:
+```yaml
+      roles:
+        # ... other roles ...
+        # - role: certbot_setup
+```
+Then, run the playbook:
+```bash
+ansible-playbook playbook.yml --ask-vault-pass
+```
+Enter your vault password when prompted. This will configure the server and deploy your application.
+
+**h. Verify HTTP Deployment**
+
+Open a web browser and navigate to `http://YOUR_SERVER_IP` (e.g., `http://91.99.197.234`). You should see your application running. If you see the "Welcome to Nginx" page, ensure the `Disable the default Nginx site` task in `roles/nginx_setup/tasks/main.yml` ran correctly.
+
+### 4. Go Live: Point DNS and Enable HTTPS
+
+**a. Update DNS Records**
+
+Go to your domain registrar's DNS management panel. Create or update the "A" records for your domain (`anggi.io`) and subdomain (`www.anggi.io`) to point to your new server's IP address.
+
+**b. Wait for DNS Propagation**
+
+DNS changes can take time to propagate (minutes to hours). You can use online tools like [DNS Checker](https://dnschecker.org/) to monitor this.
+
+**c. Enable HTTPS with Certbot**
+
+Once DNS has propagated and your domain points to the new server:
+1.  Open `personal-website-ansible/playbook.yml`.
+2.  **Uncomment** the `certbot_setup` role:
+    ```yaml
+          # ... other roles ...
+          - role: certbot_setup
+    ```
+3.  Save the file.
+4.  Run the playbook again:
+    ```bash
+    ansible-playbook playbook.yml --ask-vault-pass
+    ```
+This will run the Certbot role, obtain SSL certificates, and configure Nginx for HTTPS.
+
+**d. Verify HTTPS Deployment**
+
+Open your web browser and navigate to `https://your_domain_name` (e.g., `https://anggi.io`). You should see your site served over HTTPS with a valid SSL certificate.
+
+
+
+
 # Deploying the Personal Website to Hetzner Cloud
 
 This document outlines the two-phase process for deploying the Personal Website application to a Hetzner Cloud VPS using Terraform for infrastructure provisioning and Ansible for server configuration and application deployment.
@@ -413,4 +591,4 @@ personal-website-ansible/
     *   Run `ansible-playbook playbook.yml --ask-vault-pass` again to obtain and install the SSL certificate.
 5.  **Verify**: Access your site via `https://anggi.io`.
 
-
+---
